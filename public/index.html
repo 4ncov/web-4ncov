@@ -1,17 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>web-4ncov</title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but web-4ncov doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+        <title>web-4ncov</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css" />
+        <script>
+            (function(win, doc) {
+                var resizeEvt = 'orientationchange' in win ? 'orientationchange' : 'resize';
+
+                function setSize() {
+                    var docEl = doc.documentElement;
+                    let dpr = parseInt(win.devicePixelRatio) || 1;
+
+                    doc.body.style.fontSize = 12 * dpr + 'px';
+                    var rem = docEl.clientWidth * 0.1; //划分界面为10份
+                    docEl.style.fontSize = rem + 'px';
+                    var fontSize = parseFloat(docEl.style.fontSize),
+                        computeFontSize = parseFloat(window.getComputedStyle(docEl).fontSize);
+                    if (fontSize !== computeFontSize) {
+                        docEl.style.fontSize = (fontSize * fontSize) / computeFontSize + 'px';
+                    }
+                    win.dpr = dpr;
+                    win.fontSize = fontSize;
+                }
+
+                win.addEventListener(resizeEvt, setSize);
+                win.addEventListener('pageshow', function(e) {
+                    if (e.persisted) {
+                        setSize();
+                    }
+                });
+                doc.addEventListener('DOMContentLoaded', setSize, false);
+            })(window, document);
+        </script>
+         <style>
+            *,
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                font-size: .4rem;
+            }
+        </style>
+    </head>
+    <body>
+        <noscript>
+            <strong>We're sorry but web-4ncov doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+        </noscript>
+        <div id="app"></div>
+        <!-- built files will be auto injected -->
+    </body>
 </html>
