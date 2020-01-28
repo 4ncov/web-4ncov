@@ -2,4 +2,4 @@
 
 > 前端项目，技术栈vue+element
 
-[ui库](https://element.eleme.cn/#/zh-CN/component/installation)
+[element-ui库](https://element.eleme.cn/#/zh-CN/component/installation)
