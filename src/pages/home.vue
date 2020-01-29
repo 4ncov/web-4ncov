@@ -17,10 +17,13 @@
             全部
         </div>
         <div class="list">
-            内容
+            <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
+                <li v-for="i in count" v-bind:key="i" class="infinite-list-item">{{ i }}</li>
+            </ul>
         </div>
+        <div class="line"></div>
         <div class="footer">
-             <el-button type="primary" round>添加供应服务</el-button>
+            <el-button type="primary" round>添加供应服务</el-button>
         </div>
     </div>
 </template>
@@ -28,11 +31,22 @@
 <script>
 export default {
     name: 'app',
-    components: {}
+    components: {},
+    data() {
+        return {
+            count: 0
+        };
+    },
+    methods: {
+        load() {
+            if (this.count > 100) return;
+            this.count += 2;
+        }
+    }
 };
 </script>
 
-<style>
+<style scoped>
 .banner {
     background: #ccc;
 }
@@ -41,15 +55,18 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: .2rem 0;
+    padding: 0.2rem 0;
     background: #ccc;
 }
 #navs a {
     width: 2rem;
 }
-.footer{
+.line{
+    height: 1.7rem;
+}
+.footer {
     position: fixed;
-    bottom: .2rem;
+    bottom: 0.2rem;
     width: 100%;
     text-align: center;
 }
