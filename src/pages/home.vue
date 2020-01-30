@@ -7,7 +7,7 @@
                 </el-carousel-item>
             </el-carousel>
         </div>
-        <ChinaMap />
+        <ChinaMap @onClick="onClick" />
         <div id="navs">
             <router-link to="/foo">物资寻求</router-link>
             <router-link to="/foo">物资供应</router-link>
@@ -65,6 +65,9 @@ export default {
         },
         tab_change(item, index) {
             console.log(item, index);
+        },
+        onClick(data){
+            console.log(data)
         }
     }
 };

@@ -69,6 +69,15 @@ export default {
         };
 
         this.echartObj.setOption(option);
+        this.echartObj.on('click', this.mapclick);
+    },
+    methods: {
+        mapclick(params) {
+            this.$emit('onClick', {
+                name: params.name,
+                value: params.value
+            });
+        }
     }
 };
 </script>
