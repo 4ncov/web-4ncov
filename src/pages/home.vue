@@ -7,6 +7,7 @@
                 </el-carousel-item>
             </el-carousel>
         </div>
+        <ChinaMap />
         <div id="navs">
             <router-link to="/foo">物资寻求</router-link>
             <router-link to="/foo">物资供应</router-link>
@@ -41,9 +42,11 @@
 </template>
 
 <script>
+import ChinaMap from '../components/ChinaMap';
+
 export default {
     name: 'app',
-    components: {},
+    components: {ChinaMap},
     data() {
         return {
             menuKey: 'wz',
