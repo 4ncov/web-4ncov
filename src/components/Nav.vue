@@ -8,15 +8,14 @@
             </el-carousel>
         </div>
         <div id="navs">
-            <router-link to="/">实时数据</router-link>
-            <router-link to="/foo">物资寻求</router-link>
+            <router-link :to="{ name: 'real-time-data' }">实时数据</router-link>
+            <router-link to="/supply-demand">物资寻求</router-link>
             <router-link to="/too">车辆供应</router-link>
         </div>
     </div>
 </template>
 
 <script>
-
 export default {
     data() {
         return {
@@ -27,33 +26,33 @@ export default {
 </script>
 
 <style scoped>
-.box{
+.box {
     background: #ccc;
-    padding-bottom: .1rem;
+    padding-bottom: 0.1rem;
 }
 .banner {
     background: #ccc;
 }
-.banner img{
+.banner img {
     width: 100%;
 }
 #navs {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.25rem .2rem .1rem .2rem;
+    padding: 0.25rem 0.2rem 0.1rem 0.2rem;
     background: #fff;
-    border-radius: .3rem .3rem 0 0;
+    border-radius: 0.3rem 0.3rem 0 0;
 }
 #navs a {
     display: inline-block;
     text-decoration: none;
     color: #333;
-    padding: 0 .1rem .05rem .1rem;
-    border-bottom: solid .05rem #fff;
+    padding: 0 0.1rem 0.05rem 0.1rem;
+    border-bottom: solid 0.05rem #fff;
 }
 #navs .router-link-exact-active {
     color: #169bd5;
-    border-bottom: solid .05rem #169bd5;
+    border-bottom: solid 0.05rem #169bd5;
 }
 </style>
