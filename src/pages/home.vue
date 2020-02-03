@@ -1,29 +1,21 @@
 <template>
     <div id="home">
-        <div class="banner">
-            <el-carousel height="3rem" trigger="click">
-                <el-carousel-item v-for="item in 4" :key="item">
-                    <h3 class="small">{{ item }}</h3>
-                </el-carousel-item>
-            </el-carousel>
-        </div>
-        <div id="navs">
-            <router-link to="/foo">实时数据</router-link>
-            <router-link to="/foo">物资寻求</router-link>
-            <router-link to="/foo">车辆供应</router-link>
-        </div>
+        <Banner />
+        <Nav />
         <ChinaMap @onClick="onClick" />
         <Curr />
     </div>
 </template>
 
 <script>
+import Banner from '../components/Banner';
+import Nav from '../components/Nav';
 import ChinaMap from '../components/ChinaMap';
 import Curr from './curr';
 
 export default {
     name: 'app',
-    components: { ChinaMap, Curr },
+    components: { Banner, Nav, ChinaMap, Curr },
     data() {
         return {
             menuKey: 'wz',
@@ -51,26 +43,6 @@ export default {
 </script>
 
 <style scoped>
-.banner {
-    background: #ccc;
-}
-#navs {
-    margin-top: 0.2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.2rem 0;
-    background: #ccc;
-}
-#navs a {
-    width: 3rem;
-    text-decoration: none;
-    color: #333;
-    text-align: center;
-}
-.line {
-    height: 1.7rem;
-}
 .footer {
     position: fixed;
     bottom: 0.2rem;

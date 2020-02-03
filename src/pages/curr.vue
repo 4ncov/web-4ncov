@@ -33,7 +33,6 @@ components: { Process },
     justify-content: space-around;
     align-items: center;
 }
-.list{}
 .item{
      display: flex;
     justify-content: space-around;
