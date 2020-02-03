@@ -1,0 +1,22 @@
+.title {
+  padding: 0.3rem 0.5rem;
+}
+.title h2 {
+  font-size: 0.45rem;
+}
+.title span {
+  font-size: 0.3rem;
+  color: #999;
+}
+.cls {
+  padding: 0.1rem 0.5rem;
+}
+.cls label {
+  font-size: 0.3rem;
+  margin-right: 0.2rem;
+  vertical-align: middle;
+}
+.cls span {
+  font-size: 0.3rem;
+  padding-left: 0.05rem;
+}

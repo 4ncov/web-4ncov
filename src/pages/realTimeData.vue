@@ -1,18 +1,5 @@
 <template>
   <div id="real-time-data">
-    <div class="title">
-      <h2>医疗物资供求分布图</h2>
-      <span>(统计截至2020.01.29 15:30)</span>
-    </div>
-    <div class="cls">
-      <label> <input type="radio" />口罩 </label>
-      <label> <input type="radio" />医用帽 </label>
-      <label> <input type="radio" />核算检测试剂 </label>
-      <label> <input type="radio" />防护服 </label>
-      <label> <input type="radio" />防护眼镜 </label>
-      <label> <input type="radio" />防护面罩 </label>
-    </div>
-    <ChinaMap @onClick="onClick" />
     <div class="top_title">
       <div>省市</div>
       <div>口罩供应情况</div>
@@ -33,12 +20,13 @@
 </template>
 
 <script>
-import ChinaMap from '../components/ChinaMap'
 import Process from '../components/Process'
+import mapRefreshMixin from '../utils/mapRefreshMixin'
 
 export default {
   name: 'real-time-data',
-  components: { ChinaMap, Process },
+  components: { Process },
+  mixins: [mapRefreshMixin],
   data() {
     return {
       menuKey: 'wz',
@@ -51,6 +39,52 @@ export default {
     }
   },
   methods: {
+    dataProcessor() {
+      this.option.tooltip = {
+        trigger: 'item',
+        showDelay: 0,
+        transitionDuration: 0.2,
+        formatter: function(params) {
+          return params.name + ': 123'
+        }
+      }
+      this.option.visualMap = {
+        left: 'right',
+        min: 0,
+        max: 500,
+        inRange: {
+          color: ['#19A3FF', '#fff', '#FF6550']
+        },
+        text: ['缺口', '富余'], // 文本，默认为数值文本
+        calculable: true,
+        itemWidth: 10,
+        itemHeight: 100
+      }
+      this.option.series = [
+        {
+          name: 'china map',
+          type: 'map',
+          roam: false,
+          map: 'china',
+          emphasis: {
+            label: {
+              show: true
+            }
+          },
+          // 文本位置修正
+          textFixed: {
+            Alaska: [20, -20]
+          },
+          data: [
+            { name: '北京', value: 10 },
+            { name: '山东', value: 10 },
+            { name: '湖北', value: 100 },
+            { name: '海南', value: 1 }
+          ]
+        }
+      ]
+      return this.option
+    },
     load() {
       if (this.count > 100) return
       this.count += 2
@@ -66,23 +100,6 @@ export default {
 </script>
 
 <style scoped>
-.title {
-  padding: 0.3rem 0.5rem;
-}
-.title h2 {
-  font-size: 0.4rem;
-}
-.title span {
-  font-size: 0.15rem;
-  color: #999;
-}
-.cls {
-  padding: 0.1rem 0.5rem;
-}
-.cls label {
-  font-size: 0.2rem;
-  margin-right: 0.3rem;
-}
 .footer {
   padding: 0.2rem 0.1rem;
 }

@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
 import realTimeData from './pages/realTimeData'
 import supplyDemand from './pages/supplyDemand'
 
