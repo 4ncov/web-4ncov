@@ -1,19 +1,48 @@
 <template>
     <div id="home">
         <Nav />
+        <div class="title">
+            <h2>医疗物资供求分布图</h2>
+            <span>(统计截至2020.01.29 15:30)</span>
+        </div>
+        <div class="cls">
+            <label><input type="radio" />口罩</label>
+            <label><input type="radio" />医用帽</label>
+            <label><input type="radio" />核算检测试剂</label>
+            <label><input type="radio" />防护服</label>
+            <label><input type="radio" />防护眼镜</label>
+            <label><input type="radio" />防护面罩</label>
+        </div>
         <ChinaMap @onClick="onClick" />
-        <Curr />
+        <div class="top_title">
+            <div>省市</div>
+            <div>口罩供应情况</div>
+            <div>按缺口数量排序</div>
+        </div>
+        <div class="list">
+            <div class="item" v-for="item in 20" :key="item">
+                <div>{{ item }}.湖北</div>
+                <div>
+                    -100000
+                </div>
+                <Process w="80" class="process" />
+            </div>
+        </div>
+        <div class="footer">
+            <div class="more">查看更多地区</div>
+            <div class="txt">数据来源:xxxx</div>
+        </div>
     </div>
 </template>
 
 <script>
 import Nav from '../components/Nav';
 import ChinaMap from '../components/ChinaMap';
-import Curr from './curr';
+import Process from '../components/Process';
 
 export default {
     name: 'app',
-    components: { Nav, ChinaMap, Curr },
+    components: { Nav, ChinaMap, Process },
     data() {
         return {
             menuKey: 'wz',
@@ -41,23 +70,49 @@ export default {
 </script>
 
 <style scoped>
-.footer {
-    position: fixed;
-    bottom: 0.2rem;
-    width: 100%;
-    text-align: center;
+.title {
+    padding: 0.3rem 0.5rem;
 }
-.item1 {
-    border-bottom: solid 1px #ccc;
-    padding: 5px;
-}
-.item1_foot {
+.title h2 {
     font-size: 0.4rem;
+}
+.title span {
+    font-size: 0.15rem;
+    color: #999;
+}
+.cls {
+    padding: 0.1rem 0.5rem;
+}
+.cls label {
+    font-size: 0.2rem;
+    margin-right: 0.3rem;
+}
+.footer {
+    padding: 0.2rem 0.1rem;
+}
+.footer .more {
+    text-align: center;
+    font-size: 0.2rem;
+    border-bottom: solid 1px #333;
+    padding: 0.1rem 0;
+}
+.footer .txt {
+    font-size: 0.3rem;
+    padding: .1rem 0;
+}
+.top_title {
+    background: #ccc;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
-.item1_foot .date {
-    font-size: 0.2rem;
+.item {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: .1rem 0;
+}
+.process {
+    width: 5rem;
 }
 </style>

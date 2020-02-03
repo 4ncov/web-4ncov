@@ -38,10 +38,12 @@ export default {
                 min: 0,
                 max: 500,
                 inRange: {
-                    color: ['#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+                    color: ['#169bd5', '#fff', '#a50026']
                 },
-                text: ['High', 'Low'], // 文本，默认为数值文本
-                calculable: true
+                text: ['缺口', '富余'], // 文本，默认为数值文本
+                calculable: true,
+                itemWidth: 10,
+                itemHeight: 100
             },
             series: [
                 {
