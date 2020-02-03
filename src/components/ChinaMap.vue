@@ -49,7 +49,7 @@ export default {
                 {
                     name: 'china map',
                     type: 'map',
-                    roam: true,
+                    roam: false,
                     map: 'china',
                     emphasis: {
                         label: {

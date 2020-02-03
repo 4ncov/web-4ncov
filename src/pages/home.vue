@@ -105,6 +105,7 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    padding: .1rem 0;
 }
 .item {
     display: flex;
