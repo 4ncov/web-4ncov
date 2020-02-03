@@ -1,6 +1,5 @@
 <template>
     <div id="home">
-        <Banner />
         <Nav />
         <ChinaMap @onClick="onClick" />
         <Curr />
@@ -8,14 +7,13 @@
 </template>
 
 <script>
-import Banner from '../components/Banner';
 import Nav from '../components/Nav';
 import ChinaMap from '../components/ChinaMap';
 import Curr from './curr';
 
 export default {
     name: 'app',
-    components: { Banner, Nav, ChinaMap, Curr },
+    components: { Nav, ChinaMap, Curr },
     data() {
         return {
             menuKey: 'wz',
