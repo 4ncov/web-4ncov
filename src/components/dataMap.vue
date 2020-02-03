@@ -7,7 +7,7 @@
     <div class="cls">
       <label v-for="item of property" :key="item.id" :for="item.id">
         <input :name="item.id" type="radio" :value="item" v-model="selectedProperty" @click="handlePropertyChange(item)" />
-        <span>
+        <span :style="{ color: selectedProperty.id === item.id ? '#09f' : '#000' }">
           {{ item.name }}
         </span>
       </label>

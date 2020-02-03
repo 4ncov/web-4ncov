@@ -1,5 +1,8 @@
 <template>
-  <div id="chinamap"></div>
+  <section class="map">
+    <div id="chinamap"></div>
+    <p class="bottom-tip">数据来源: xxx</p>
+  </section>
 </template>
 
 <script>
@@ -41,7 +44,15 @@ export default {
 </script>
 
 <style>
+.map {
+  padding: 0.03rem 0.5rem;
+}
 #chinamap {
   height: 7rem;
+}
+.bottom-tip {
+  border-top: 1px solid #797979;
+  font-size: 0.2rem;
+  color: #666666;
 }
 </style>
