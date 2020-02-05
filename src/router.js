@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import requiredMaterials from './pages/requiredMaterials.vue'
+import suppliedMaterials from './pages/suppliedMaterials.vue'
 import realTimeData from './pages/realTimeData'
 import supplyDemand from './pages/supplyDemand'
 
@@ -7,6 +9,22 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: '', redirect: '/real-time-data' },
+  {
+    path: '/required-materials',
+    name: 'required-materials',
+    meta: {
+      title: '提交物资寻求'
+    },
+    component: requiredMaterials
+  },
+  {
+    path: '/supplied-materials',
+    name: 'supplied-materials',
+    meta: {
+      title: '提交物资供应'
+    },
+    component: suppliedMaterials
+  },
   {
     path: '/real-time-data',
     name: 'real-time-data',
@@ -28,7 +46,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'hash',
+  mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
