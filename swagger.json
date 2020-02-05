@@ -1,0 +1,987 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "4nCov Swagger Api Document",
+    "version": "1.0.0",
+    "title": "4nCoV API",
+    "contact": {
+      "name": "Jackjun",
+      "url": "https://4ncov.github.io",
+      "email": "jack@retzero.com"
+    }
+  },
+  "host": "localhost:8000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "file-controller",
+      "description": "File Controller"
+    },
+    {
+      "name": "hospital-controller",
+      "description": "Hospital Controller"
+    },
+    {
+      "name": "materials-controller",
+      "description": "Materials Controller"
+    },
+    {
+      "name": "supplier-controller",
+      "description": "Supplier Controller"
+    },
+    {
+      "name": "user-controller",
+      "description": "User Controller"
+    }
+  ],
+  "paths": {
+    "/api/hospitals/sign-up": {
+      "post": {
+        "tags": [
+          "Hospitals"
+        ],
+        "summary": "Hospital signup.",
+        "operationId": "signUpUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "signupRequest",
+            "description": "signupRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/HospitalSignUpRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/RestResponseOfHospitalResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "global"
+            ]
+          }
+        ],
+        "deprecated": false
+      }
+    },
+    "/api/images": {
+      "post": {
+        "tags": [
+          "Files"
+        ],
+        "summary": "Upload an image.",
+        "operationId": "uploadImageUsingPOST",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "description": "category",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "image",
+            "in": "formData",
+            "description": "image",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/RestResponseOfImageUploadResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "global"
+            ]
+          }
+        ],
+        "deprecated": false
+      }
+    },
+    "/api/required-materials": {
+      "get": {
+        "tags": [
+          "Required Materials"
+        ],
+        "summary": "List required materials.",
+        "operationId": "listRequiredMaterialsUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "description": "category",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PageOfMaterialResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "global"
+            ]
+          }
+        ],
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Required Materials"
+        ],
+        "summary": "Create new required material.",
+        "operationId": "createRequiredMaterialUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "material",
+            "description": "material",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MaterialRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/RestResponseOfMaterialResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "global"
+            ]
+          }
+        ],
+        "deprecated": false
+      }
+    },
+    "/api/required-materials/me": {
+      "get": {
+        "tags": [
+          "Required Materials"
+        ],
+        "summary": "List my required materials.",
+        "operationId": "listMyRequiredMaterialsUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PageOfMaterialResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "global"
+            ]
+          }
+        ],
+        "deprecated": false
+      }
+    },
+    "/api/supplied-materials": {
+      "get": {
+        "tags": [
+          "Supplied Materials"
+        ],
+        "summary": "List supplied materials.",
+        "operationId": "listSuppliedMaterialsUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "description": "category",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PageOfMaterialResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "global"
+            ]
+          }
+        ],
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Supplied Materials"
+        ],
+        "summary": "Create new supplied material.",
+        "operationId": "createSuppliedMaterialUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "material",
+            "description": "material",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MaterialRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/RestResponseOfMaterialResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "global"
+            ]
+          }
+        ],
+        "deprecated": false
+      }
+    },
+    "/api/supplied-materials/me": {
+      "get": {
+        "tags": [
+          "Supplied Materials"
+        ],
+        "summary": "List my supplied materials.",
+        "operationId": "listMySuppliedMaterialsUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PageOfMaterialResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "global"
+            ]
+          }
+        ],
+        "deprecated": false
+      }
+    },
+    "/api/suppliers/sign-up": {
+      "post": {
+        "tags": [
+          "Suppliers"
+        ],
+        "summary": "Supplier sign up.",
+        "operationId": "signUpUsingPOST_1",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "signUpRequest",
+            "description": "signUpRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SupplierSignUpRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/RestResponseOfSupplierResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "global"
+            ]
+          }
+        ],
+        "deprecated": false
+      }
+    },
+    "/api/users/sign-in": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "User sign in.",
+        "operationId": "signInUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "signInRequest",
+            "description": "signInRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SignInRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RestResponseOfSignInResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "global"
+            ]
+          }
+        ],
+        "deprecated": false
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Authorization": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "HospitalResponse": {
+      "type": "object",
+      "properties": {
+        "contactorName": {
+          "type": "string",
+          "description": "需求方联系人"
+        },
+        "contactorTelephone": {
+          "type": "string",
+          "description": "需求方联系电话"
+        },
+        "gmtCreated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "创建时间"
+        },
+        "gmtModified": {
+          "type": "string",
+          "format": "date-time",
+          "description": "上次更新时间"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "需求方唯一ID"
+        },
+        "identificationNumber": {
+          "type": "string",
+          "description": "申请人身份证号"
+        },
+        "name": {
+          "type": "string",
+          "description": "需求方机构名称"
+        },
+        "uniformSocialCreditCode": {
+          "type": "string",
+          "description": "18位社会统一信用代码"
+        }
+      },
+      "title": "HospitalResponse"
+    },
+    "HospitalSignUpRequest": {
+      "type": "object",
+      "properties": {
+        "contactorName": {
+          "type": "string",
+          "description": "需求方联系人"
+        },
+        "contactorTelephone": {
+          "type": "string",
+          "description": "需求方联系电话"
+        },
+        "identificationNumber": {
+          "type": "string",
+          "description": "申请人身份证号"
+        },
+        "imageUrls": {
+          "type": "array",
+          "description": "上传的图片地址, 支持多个图片",
+          "items": {
+            "type": "string"
+          }
+        },
+        "name": {
+          "type": "string",
+          "description": "需求方机构名称"
+        },
+        "password": {
+          "type": "string",
+          "description": "需求方登录密码"
+        },
+        "uniformSocialCreditCode": {
+          "type": "string",
+          "description": "18位社会统一信用代码"
+        }
+      },
+      "title": "HospitalSignUpRequest"
+    },
+    "ImageUploadResponse": {
+      "type": "object",
+      "properties": {
+        "gmtCreated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "创建时间"
+        },
+        "url": {
+          "type": "string",
+          "description": "图片URL"
+        }
+      },
+      "title": "ImageUploadResponse"
+    },
+    "MaterialDto": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string",
+          "description": "物资类别"
+        },
+        "name": {
+          "type": "string",
+          "description": "物资名称"
+        },
+        "quantity": {
+          "type": "number",
+          "format": "double",
+          "description": "物资数量"
+        },
+        "standard": {
+          "type": "string",
+          "description": "执行标准"
+        }
+      },
+      "title": "MaterialDto"
+    },
+    "MaterialRequest": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string",
+          "description": "收货/发货地址"
+        },
+        "comment": {
+          "type": "string",
+          "description": "备注"
+        },
+        "contactorName": {
+          "type": "string",
+          "description": "联系人"
+        },
+        "contactorPhone": {
+          "type": "string",
+          "description": "联系电话"
+        },
+        "hospitalName": {
+          "type": "string",
+          "description": "发布/供货机构名称"
+        },
+        "imageUrls": {
+          "type": "array",
+          "description": "物资图片, 支持多张",
+          "items": {
+            "type": "string"
+          }
+        },
+        "materials": {
+          "type": "array",
+          "description": "物资信息",
+          "items": {
+            "$ref": "#/definitions/MaterialDto"
+          }
+        }
+      },
+      "title": "MaterialRequest"
+    },
+    "MaterialResponse": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string",
+          "description": "收货/发货地址"
+        },
+        "comment": {
+          "type": "string",
+          "description": "备注"
+        },
+        "contactorName": {
+          "type": "string",
+          "description": "联系人"
+        },
+        "contactorPhone": {
+          "type": "string",
+          "description": "联系电话"
+        },
+        "gmtCreated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "创建时间"
+        },
+        "gmtModified": {
+          "type": "string",
+          "format": "date-time",
+          "description": "上次更新时间"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "需求/供应物资唯一ID"
+        },
+        "materials": {
+          "type": "array",
+          "description": "物资信息",
+          "items": {
+            "$ref": "#/definitions/MaterialDto"
+          }
+        },
+        "status": {
+          "type": "string",
+          "description": "状态"
+        }
+      },
+      "title": "MaterialResponse"
+    },
+    "PageOfMaterialResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MaterialResponse"
+          }
+        },
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "PageOfMaterialResponse"
+    },
+    "RestResponseOfHospitalResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/HospitalResponse"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "RestResponseOfHospitalResponse"
+    },
+    "RestResponseOfImageUploadResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/ImageUploadResponse"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "RestResponseOfImageUploadResponse"
+    },
+    "RestResponseOfMaterialResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/MaterialResponse"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "RestResponseOfMaterialResponse"
+    },
+    "RestResponseOfSignInResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/SignInResponse"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "RestResponseOfSignInResponse"
+    },
+    "RestResponseOfSupplierResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/SupplierResponse"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "RestResponseOfSupplierResponse"
+    },
+    "SignInRequest": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string",
+          "description": "登录密码"
+        },
+        "telephone": {
+          "type": "string",
+          "description": "登录电话号码"
+        }
+      },
+      "title": "SignInRequest"
+    },
+    "SignInResponse": {
+      "type": "object",
+      "properties": {
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "token过期时间"
+        },
+        "token": {
+          "type": "string",
+          "description": "Access token"
+        }
+      },
+      "title": "SignInResponse"
+    },
+    "SupplierResponse": {
+      "type": "object",
+      "properties": {
+        "contactorName": {
+          "type": "string",
+          "description": "联系人"
+        },
+        "contactorTelephone": {
+          "type": "string",
+          "description": "联系电话"
+        },
+        "gmtCreated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "创建时间"
+        },
+        "gmtModified": {
+          "type": "string",
+          "format": "date-time",
+          "description": "上次更新时间"
+        },
+        "haveLogistics": {
+          "type": "boolean",
+          "description": "是否自备物流"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "供应商唯一ID"
+        },
+        "identificationNumber": {
+          "type": "string",
+          "description": "申请人身份证号"
+        },
+        "name": {
+          "type": "string",
+          "description": "供应商公司名称"
+        }
+      },
+      "title": "SupplierResponse"
+    },
+    "SupplierSignUpRequest": {
+      "type": "object",
+      "properties": {
+        "contactorName": {
+          "type": "string",
+          "description": "联系人"
+        },
+        "contactorTelephone": {
+          "type": "string",
+          "description": "联系电话"
+        },
+        "haveLogistics": {
+          "type": "boolean",
+          "description": "是否自备物流"
+        },
+        "identificationNumber": {
+          "type": "string",
+          "description": "申请人身份证号"
+        },
+        "imageUrls": {
+          "type": "array",
+          "description": "供应商图片上传, 支持多张图片",
+          "items": {
+            "type": "string"
+          }
+        },
+        "name": {
+          "type": "string",
+          "description": "供应商公司名称"
+        },
+        "password": {
+          "type": "string",
+          "description": "登录密码"
+        }
+      },
+      "title": "SupplierSignUpRequest"
+    }
+  }
+}
