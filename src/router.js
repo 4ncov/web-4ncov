@@ -5,6 +5,7 @@ import suppliedMaterials from './pages/suppliedMaterials.vue'
 import realTimeData from './pages/realTimeData'
 import supplyDemand from './pages/supplyDemand'
 import Login from './pages/login'
+import Register from './pages/register'
 
 Vue.use(VueRouter)
 
@@ -17,6 +18,14 @@ const routes = [
       title: '登录'
     },
     component: Login
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    meta: {
+      title: '注册'
+    },
+    component: Register
   },
   {
     path: '/required-materials',

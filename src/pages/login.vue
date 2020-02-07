@@ -16,6 +16,9 @@
             <div class="forget">
                 <router-link to="/too">忘记密码?</router-link>
             </div>
+            <div class="forget">
+                <router-link to="/register">点击实名注册账户</router-link>
+            </div>
             <el-button @click="loginTo" class="sub" type="primary">确定</el-button>
         </div>
     </div>
@@ -43,6 +46,7 @@ export default {
                     telephone: this.username
                 })
                 User.setInfo(data.token, data.expiresAt)
+                this.$router.push('/')
             } catch (error) {
                 this.$message.error(error.message)
             }
@@ -75,6 +79,7 @@ export default {
 }
 .forget a {
     font-size: 0.2rem;
+    text-decoration: none;
 }
 .sub {
     padding: 0.2rem 0.7rem;
