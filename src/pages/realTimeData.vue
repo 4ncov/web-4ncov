@@ -1,34 +1,38 @@
 <template>
-    <div id="real-time-data">
-        <div class="top_title">
-            <div>省市</div>
-            <div>口罩供应情况</div>
-            <div>按缺口数量排序</div>
-        </div>
-        <div class="list">
-            <div class="item" v-for="item in 20" :key="item">
-                <div>{{ item }}.湖北</div>
-                <div>-100000</div>
-                <Process w="80" class="process" />
+    <div>
+        <Nav />
+        <dataMap :title="title" :dataTime="dataTime" />
+        <div id="real-time-data">
+            <div class="top_title">
+                <div>省市</div>
+                <div>口罩供应情况</div>
+                <div>按缺口数量排序</div>
             </div>
-        </div>
-        <div class="footer">
-            <div class="more">查看更多地区</div>
-            <div class="txt">数据来源:xxxx</div>
-            <div class="tit">友情赞助</div>
-            <div class="logos">
-                <div class="logo">
-                    <img src="https://cloud.yovole.com/images/foot-logo.png" />
+            <div class="list">
+                <div class="item" v-for="item in 20" :key="item">
+                    <div>{{ item }}.湖北</div>
+                    <div>-100000</div>
+                    <Process w="80" class="process" />
                 </div>
-                <div class="logo">
-                    <img src="http://resource.guofangchao.com/4ncov/baiwei.pic" />
-                </div>
-                <div class="logo">
-                    <img class="longan" src="http://resource.guofangchao.com/4ncov/longan.pic" />
-                </div>
-                <div class="logo">
-                    <img class="jingdong" src="https://img1.jcloudcs.com/portal/app-logo.png" />
-                    <p>京东云</p>
+            </div>
+            <div class="footer">
+                <div class="more">查看更多地区</div>
+                <div class="txt">数据来源:xxxx</div>
+                <div class="tit">友情赞助</div>
+                <div class="logos">
+                    <div class="logo">
+                        <img src="https://cloud.yovole.com/images/foot-logo.png" />
+                    </div>
+                    <div class="logo">
+                        <img src="http://resource.guofangchao.com/4ncov/baiwei.pic" />
+                    </div>
+                    <div class="logo">
+                        <img class="longan" src="http://resource.guofangchao.com/4ncov/longan.pic" />
+                    </div>
+                    <div class="logo">
+                        <img class="jingdong" src="https://img1.jcloudcs.com/portal/app-logo.png" />
+                        <p>京东云</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -38,13 +42,17 @@
 <script>
 import Process from '../components/Process'
 import mapRefreshMixin from '../utils/mapRefreshMixin'
+import Nav from '../components/Nav'
+import dataMap from '../components/dataMap'
 
 export default {
     name: 'real-time-data',
-    components: { Process },
+    components: { Process, Nav, dataMap },
     mixins: [mapRefreshMixin],
     data() {
         return {
+            title: '医疗物资需求分布地图',
+            dataTime: '2020.01.29 15:30',
             menuKey: 'wz',
             count: 0,
             selectedId: 0,

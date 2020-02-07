@@ -4,11 +4,20 @@ import requiredMaterials from './pages/requiredMaterials.vue'
 import suppliedMaterials from './pages/suppliedMaterials.vue'
 import realTimeData from './pages/realTimeData'
 import supplyDemand from './pages/supplyDemand'
+import Login from './pages/login'
 
 Vue.use(VueRouter)
 
 const routes = [
   { path: '', redirect: '/real-time-data' },
+  {
+    path: '/login',
+    name: 'Login',
+    meta: {
+      title: '登录'
+    },
+    component: Login
+  },
   {
     path: '/required-materials',
     name: 'required-materials',
