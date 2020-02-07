@@ -1,15 +1,80 @@
 <template>
-  <div>
-      adw
-  </div>
+    <div id="login">
+        <img class="top-img" src="http://resource.guofangchao.com/4ncov/u213.png" />
+        <div class="form">
+            <div class="tit">
+                用户登录
+            </div>
+            <div class="item">
+                请输入登录名（手机号/邮箱）
+                <el-input v-model="username" placeholder="请输入登录名"></el-input>
+            </div>
+            <div class="item">
+                请输入登录密码
+                <el-input v-model="password" placeholder="请输入密码" show-password></el-input>
+            </div>
+            <div class="forget">
+                <router-link to="/too">忘记密码?</router-link>
+            </div>
+            <el-button @click="loginTo" class="sub" type="primary">确定</el-button>
+        </div>
+    </div>
 </template>
 
 <script>
-export default {
+import Request from '../services/request'
+import User from '../services/user'
 
+export default {
+    data() {
+        return {
+            username: '',
+            password: ''
+        }
+    },
+    methods: {
+        async loginTo() {
+            try {
+                const data = await Request.post('/users/sign-in', {
+                    password: this.password,
+                    telephone: this.username
+                })
+                User.setInfo(data.token, data.expiresAt)
+            } catch (error) {
+                this.$message.error('登录失败')
+            }
+        }
+    }
 }
 </script>
 
-<style>
-
+<style scoped>
+#login {
+    text-align: center;
+}
+.top-img {
+    width: 100%;
+}
+.form {
+    padding: 0.5rem 1.5rem;
+}
+.tit {
+    font-size: 0.5rem;
+}
+.item {
+    text-align: left;
+    font-size: 0.3rem;
+    margin: 0.3rem 0;
+    line-height: 0.6rem;
+}
+.forget {
+    text-align: right;
+}
+.forget a {
+    font-size: 0.2rem;
+}
+.sub {
+    padding: 0.2rem 0.7rem;
+    margin-top: 0.2rem;
+}
 </style>
