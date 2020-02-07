@@ -28,7 +28,19 @@
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
                 <el-form-item label="公司资质">
-                    <el-input v-model="form.name"></el-input>
+                    <el-upload
+                        v-show="form.img === ''"
+                        class="uploadBox"
+                        :data="{ category: 'test' }"
+                        name="image"
+                        action="/api/images"
+                        :before-upload="handleBefore"
+                        :on-success="handleUploadSuccess"
+                        :show-file-list="false"
+                    >
+                        <i class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                    <img class="uploadImg" v-if="form.img !== ''" :src="form.img" />
                 </el-form-item>
             </el-form>
             <el-button class="btnCls" type="primary">提交</el-button>
@@ -68,11 +80,25 @@ export default {
         return {
             activeIndex: 0,
             form: {
-                name: ''
-            }
+                name: '',
+                img: ''
+            },
+            labels: {}
         }
     },
-    methods: {}
+    methods: {
+        handleBefore(file) {
+            console.log(file)
+            const reader = new FileReader()
+            reader.onload = () => {
+                this.form.img = reader.result
+            }
+            reader.readAsDataURL(file)
+        },
+        handleUploadSuccess(res) {
+            const url = res.data.url
+        }
+    }
 }
 </script>
 
@@ -89,5 +115,20 @@ export default {
 }
 .btnCls {
     padding: 0.3rem 2rem;
+}
+
+.uploadBox {
+    width: 5rem;
+    height: 3rem;
+    background: #fefefe;
+    border: solid 1px #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+}
+.uploadImg {
+    max-width: 5rem;
+    max-height: 3rem;
 }
 </style>
