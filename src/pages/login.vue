@@ -34,6 +34,9 @@ export default {
     },
     methods: {
         async loginTo() {
+            if (!this.password || !this.username) {
+                return this.$message.error('请填写登录名和密码')
+            }
             try {
                 const data = await Request.post('/users/sign-in', {
                     password: this.password,
