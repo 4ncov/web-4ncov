@@ -44,7 +44,7 @@ export default {
                 })
                 User.setInfo(data.token, data.expiresAt)
             } catch (error) {
-                this.$message.error('登录失败')
+                this.$message.error(error.message)
             }
         }
     }
