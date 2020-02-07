@@ -28,21 +28,10 @@
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
                 <el-form-item label="公司资质">
-                    <el-upload
-                        v-show="form.img === ''"
-                        class="uploadBox"
-                        :data="{ category: 'test' }"
-                        name="image"
-                        action="/api/images"
-                        :before-upload="handleBefore"
-                        :on-success="handleUploadSuccess"
-                        :show-file-list="false"
-                    >
-                        <i class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
-                    <img class="uploadImg" v-if="form.img !== ''" :src="form.img" />
+                    <UploadImg v-model="form.img" />
                 </el-form-item>
             </el-form>
+
             <el-button class="btnCls" type="primary">提交</el-button>
         </div>
         <div class="active1" v-if="activeIndex === 1">
@@ -75,7 +64,10 @@
 </template>
 
 <script>
+import UploadImg from '../components/UploadImg'
+
 export default {
+    components: { UploadImg },
     data() {
         return {
             activeIndex: 0,
