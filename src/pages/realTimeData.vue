@@ -44,6 +44,7 @@ import Process from '../components/Process'
 import mapRefreshMixin from '../utils/mapRefreshMixin'
 import Nav from '../components/Nav'
 import dataMap from '../components/dataMap'
+import request from '../services/request'
 
 export default {
     name: 'real-time-data',
@@ -60,6 +61,19 @@ export default {
             options: {
                 activeColor: '#1d98bd'
             }
+        }
+    },
+    async mounted() {
+        try {
+            const list = await request.get('/required-materials', {
+                params: {
+                    category: '口罩',
+                    page: 0,
+                    size: 20
+                }
+            })
+        } catch (error) {
+            console.log(error)
         }
     },
     methods: {
