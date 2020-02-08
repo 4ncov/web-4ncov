@@ -9,7 +9,7 @@
     </div>
     <div id="navs">
       <router-link :to="{ name: 'real-time-data' }">实时数据</router-link>
-      <router-link to="/supply-demand">物资寻求</router-link>
+      <router-link to="/required-materials-list">物资寻求</router-link>
       <router-link to="/too">物资供应</router-link>
     </div>
   </div>

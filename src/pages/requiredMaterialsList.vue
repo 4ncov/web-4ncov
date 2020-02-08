@@ -23,7 +23,7 @@
     import RequiredMaterialService from '../services/RequiredMaterial'
 
     export default {
-        name: 'supply-demand',
+        name: 'required-materials-list',
         components: { Nav, dataMap, MaterialList },
         mixins: [mapRefreshMixin],
         data() {
