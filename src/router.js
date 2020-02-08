@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import requiredMaterials from './pages/requiredMaterials.vue'
 import suppliedMaterials from './pages/suppliedMaterials.vue'
 import realTimeData from './pages/realTimeData'
-import supplyDemand from './pages/requiredMaterialsList'
+import supplyDemand from './pages/requiredMaterialsOverview'
 import Login from './pages/login'
 import Register from './pages/register'
 
@@ -52,8 +52,8 @@ const routes = [
     component: realTimeData
   },
   {
-    path: '/required-materials-list',
-    name: 'required-materials-list',
+    path: '/required-materials-overview',
+    name: 'required-materials-overview',
     meta: {
       title: '物资寻求'
     },
