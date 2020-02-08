@@ -9,6 +9,10 @@
                 <el-tab-pane v-for="cat in categories" v-bind:label="cat"></el-tab-pane>
             </el-tabs>
             <MaterialList :materials="materials"></MaterialList>
+            <el-button class="required-materials-loadmore"
+                       v-on:click="loadMore" v-bind:loading="loadingMore" v-bind:disabled="!hasNextPage">
+                {{hasNextPage ? '加载更多' : '没有更多'}}
+            </el-button>
         </section>
     </div>
 </template>
@@ -18,7 +22,6 @@
     import Nav from '../components/Nav'
     import dataMap from '../components/dataMap'
     import MaterialList from '../components/MaterialList'
-    import request from '../services/request'
     import categories from '../utils/MaterialCategories'
     import RequiredMaterialService from '../services/RequiredMaterial'
 
@@ -34,12 +37,18 @@
                 categories,
                 page: 1,
                 size: 10,
-                defaultCategory: categories[0]
+                loadingMore: false,
+                hasNextPage: true,
+                selectedCategory: categories[0]
             }
         },
         created() {
-            RequiredMaterialService.getRequiredMaterials(this.page, this.size, this.defaultCategory)
+            RequiredMaterialService.getRequiredMaterials(this.page, this.size, this.selectedCategory)
                 .then((materials) => {
+                    if (materials.length === 0) {
+                        this.hasNextPage = false
+                        return
+                    }
                     this.materials = materials
                 })
         },
@@ -92,14 +101,35 @@
                 return this.option
             },
             handleTabSwitch(tab) {
-                RequiredMaterialService.getRequiredMaterials(1, this.size, tab.label)
+                this.materials = []
+                this.selectedCategory = tab.label
+                this.page = 1
+                this.loadingMore = false
+                this.hasNextPage = true
+                RequiredMaterialService.getRequiredMaterials(this.page, this.size, this.selectedCategory)
                     .then((materials) => {
+                        if (materials.length === 0) {
+                            this.hasNextPage = false
+                            return
+                        }
                         this.materials = materials
                     })
             },
-            handlePullUp() {
+            loadMore() {
+                if (!this.hasNextPage) {
+                    return
+                }
+                this.loadingMore = true
                 ++this.page
-                request.get(`/required-materials?`)
+                RequiredMaterialService.getRequiredMaterials(this.page, this.size, this.selectedCategory)
+                    .then((materials) => {
+                        this.loadingMore = false
+                        if (materials.length === 0) {
+                            this.hasNextPage = false
+                            return
+                        }
+                        this.materials = this.materials.concat(materials)
+                    })
             }
         }
     }
@@ -122,5 +152,9 @@
         font-size: 0.35rem;
         padding-left: 0.08rem;
         margin-top: 0.2rem;
+    }
+
+    .required-materials-loadmore {
+        width: 100%;
     }
 </style>
