@@ -41,11 +41,11 @@ export default {
                 return this.$message.error('请填写登录名和密码')
             }
             try {
-                const data = await Request.post('/users/sign-in', {
+                const res = await Request.post('/users/sign-in', {
                     password: this.password,
                     telephone: this.username
                 })
-                User.setInfo(data.token, data.expiresAt)
+                User.setInfo(res.data.token, res.data.expiresAt)
                 this.$router.push('/')
             } catch (error) {
                 this.$message.error(error.message)
