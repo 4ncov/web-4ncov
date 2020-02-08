@@ -3,75 +3,84 @@ import VueRouter from 'vue-router'
 import requiredMaterials from './pages/requiredMaterials.vue'
 import suppliedMaterials from './pages/suppliedMaterials.vue'
 import realTimeData from './pages/realTimeData'
-import supplyDemand from './pages/requiredMaterialsOverview'
+import requiredMaterialOverview from './pages/requiredMaterialsOverview'
+import suppliedMaterialOverview from './pages/suppliedMaterialsOverview'
 import Login from './pages/login'
 import Register from './pages/register'
 
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '', redirect: '/real-time-data' },
-  {
-    path: '/login',
-    name: 'Login',
-    meta: {
-      title: '登录'
+    { path: '', redirect: '/real-time-data' },
+    {
+        path: '/login',
+        name: 'Login',
+        meta: {
+            title: '登录'
+        },
+        component: Login
     },
-    component: Login
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    meta: {
-      title: '注册'
+    {
+        path: '/register',
+        name: 'Register',
+        meta: {
+            title: '注册'
+        },
+        component: Register
     },
-    component: Register
-  },
-  {
-    path: '/required-materials',
-    name: 'required-materials',
-    meta: {
-      title: '提交物资寻求'
+    {
+        path: '/required-materials',
+        name: 'required-materials',
+        meta: {
+            title: '提交物资寻求'
+        },
+        component: requiredMaterials
     },
-    component: requiredMaterials
-  },
-  {
-    path: '/supplied-materials',
-    name: 'supplied-materials',
-    meta: {
-      title: '提交物资供应'
+    {
+        path: '/supplied-materials',
+        name: 'supplied-materials',
+        meta: {
+            title: '提交物资供应'
+        },
+        component: suppliedMaterials
     },
-    component: suppliedMaterials
-  },
-  {
-    path: '/real-time-data',
-    name: 'real-time-data',
-    meta: {
-      title: '实时数据'
+    {
+        path: '/real-time-data',
+        name: 'real-time-data',
+        meta: {
+            title: '实时数据'
+        },
+        component: realTimeData
     },
-    component: realTimeData
-  },
-  {
-    path: '/required-materials-overview',
-    name: 'required-materials-overview',
-    meta: {
-      title: '物资寻求'
+    {
+        path: '/required-materials-overview',
+        name: 'required-materials-overview',
+        meta: {
+            title: '物资寻求'
+        },
+        component: requiredMaterialOverview
     },
-    component: supplyDemand
-  },
-  // 其他页面一律跳回主页实时数据，有404可以加个TODO:
-  { path: '*', redirect: '/real-time-data' }
+    {
+        path: '/supplied-materials-overview',
+        name: 'supplied-materials-overview',
+        meta: {
+            title: '物资供应'
+        },
+        component: suppliedMaterialOverview
+    },
+    // 其他页面一律跳回主页实时数据，有404可以加个TODO:
+    { path: '*', redirect: '/real-time-data' }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes
 })
 
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title || '首页'
-  next()
+    document.title = to.meta.title || '首页'
+    next()
 })
 
 export default router

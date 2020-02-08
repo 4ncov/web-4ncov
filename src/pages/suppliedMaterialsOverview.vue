@@ -4,7 +4,7 @@
         <dataMap :title="title" :dataTime="dataTime"/>
         <section class="listing">
             <div class="gap"></div>
-            <p class="listing__title">查询物资寻求方</p>
+            <p class="listing__title">查询物资供应方</p>
             <el-tabs @tab-click="handleTabSwitch">
                 <el-tab-pane v-for="cat in categories" v-bind:label="cat"></el-tab-pane>
             </el-tabs>
@@ -23,15 +23,15 @@
     import dataMap from '../components/dataMap'
     import MaterialList from '../components/MaterialList'
     import categories from '../utils/MaterialCategories'
-    import RequiredMaterialService from '../services/RequiredMaterial'
+    import SuppliedMaterialService from '../services/SuppliedMaterial'
 
     export default {
-        name: 'required-materials-overview',
+        name: 'supplied-materials-overview',
         components: { Nav, dataMap, MaterialList },
         mixins: [mapRefreshMixin],
         data() {
             return {
-                title: '医疗物资需求分布地图',
+                title: '医疗物资供应分布地图',
                 dataTime: '2020.01.29 15:30',
                 materials: [],
                 categories,
@@ -43,7 +43,7 @@
             }
         },
         created() {
-            RequiredMaterialService.getRequiredMaterials(this.page, this.size, this.selectedCategory)
+            SuppliedMaterialService.getSuppliedMaterials(this.page, this.size, this.selectedCategory)
                 .then((materials) => {
                     if (materials.length === 0) {
                         this.hasNextPage = false
@@ -106,7 +106,7 @@
                 this.page = 1
                 this.loadingMore = false
                 this.hasNextPage = true
-                RequiredMaterialService.getRequiredMaterials(this.page, this.size, this.selectedCategory)
+                SuppliedMaterialService.getSuppliedMaterials(this.page, this.size, this.selectedCategory)
                     .then((materials) => {
                         if (materials.length === 0) {
                             this.hasNextPage = false
@@ -121,7 +121,7 @@
                 }
                 this.loadingMore = true
                 ++this.page
-                RequiredMaterialService.getRequiredMaterials(this.page, this.size, this.selectedCategory)
+                SuppliedMaterialService.getSuppliedMaterials(this.page, this.size, this.selectedCategory)
                     .then((materials) => {
                         this.loadingMore = false
                         if (materials.length === 0) {
