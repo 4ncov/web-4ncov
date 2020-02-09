@@ -91,8 +91,8 @@
             <!-- 用户信息开始 -->
             <label class="materials-item__label" v-text="labels.contactor"></label>
             <div class="other">
-                <el-form-item :label="labels.hospitalName">
-                    <el-input v-model="formData.hospitalName"></el-input>
+                <el-form-item :label="labels.organisationName">
+                    <el-input v-model="formData.organisationName"></el-input>
                 </el-form-item>
                 <el-form-item :label="labels.contactorName">
                     <el-input v-model="formData.contactorName"></el-input>
@@ -110,7 +110,16 @@
                 <el-input v-model="formData.comment"></el-input>
             </el-form-item>
             <!-- 图片上传 -->
-            <el-upload drag class="upload" action="/api/images" :on-success="handleUploadSuccess" list-type="picture">
+            <el-upload
+                drag
+                class="upload"
+                :headers="{ Authorization: getToken() }"
+                :on-error="handleUploadError"
+                :data="{ category }"
+                name="image"
+                action="/api/images"
+                :on-success="handleUploadSuccess"
+            >
                 <i class="el-icon-upload"></i>
                 <!-- <div class="el-upload__text"><em>点击上传</em></div> -->
                 <!-- <el-button size="mini" type="primary">点击上传</el-button> -->
@@ -133,11 +142,15 @@ const cloneDeep = v => JSON.parse(JSON.stringify(v || {}))
 export default {
     name: 'post-materials',
     props: {
+        postType: {
+            type: String,
+            default: 'required'
+        },
         formData: {
             type: Object,
             default: () => ({
                 // 发布/供货机构名称
-                hospitalName: '',
+                organisationName: '',
                 // 联系人
                 contactorName: '',
                 // 联系电话
@@ -176,7 +189,27 @@ export default {
     created() {
         this.materialBackup = cloneDeep(this.formData.materials)
     },
+    computed: {
+        // eslint-disable-next-line vue/return-in-computed-property
+        category() {
+            if (this.postType === 'required') {
+                return '寻求图片'
+            } else if (this.postType === 'supplied') {
+                return '供应图片'
+            }
+        }
+    },
     methods: {
+        getToken() {
+            return `Bearer ${localStorage.getItem('token')}`
+        },
+        handleUploadError(err, file, fileList) {
+            err = JSON.parse(err.message)
+            this.$message({
+                type: 'error',
+                message: err.message
+            })
+        },
         handleSubmit() {
             this.$emit('submit', this.formData)
         },
@@ -188,7 +221,7 @@ export default {
         },
         handleUploadSuccess(res) {
             const url = res.data.url
-            this.formData.imageUrls = Array.isArray(url) ? url : []
+            this.formData.imageUrls.push(url)
         }
     }
 }

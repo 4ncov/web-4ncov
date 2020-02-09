@@ -56,12 +56,10 @@ export default {
     },
     methods: {
         handleSubmit(formData) {
-            console.log(formData)
             request.post('/required-materials', formData).then(res => {
-                console.log(res)
-                // TODO：提交成功后的行为
-                alert('post required-materials success')
+                this.$message({ type: 'success', message: '物资需求信息发布成功' })
             })
+            this.$router.push({ name: 'required-materials-overview' })
         }
     },
     components: { PostMaterials }
