@@ -14,7 +14,7 @@
                 <el-input v-model="password" placeholder="请输入密码" show-password></el-input>
             </div>
             <div class="forget">
-                <router-link to="/too">忘记密码?</router-link>
+                <router-link to="/forget-pwd">忘记密码?</router-link>
             </div>
             <div class="forget">
                 <router-link to="/register">点击实名注册账户</router-link>
