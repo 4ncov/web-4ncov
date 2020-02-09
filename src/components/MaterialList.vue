@@ -32,7 +32,8 @@
                 <hr class="material-item__separator"/>
                 <div class="material-item__section">
                     <p><strong>{{item.organisationName}}</strong></p>
-                    <p class="material-item__section__quantity"><strong>需：{{item.material.quantity}}件</strong></p>
+                    <p class="material-item__section__quantity">
+                        <strong>{{quantityTitle}}：{{item.material.quantity}}件</strong></p>
                     <p>收货地址: {{item.address}}</p>
                     <p>联系人: {{item.contactorName}}</p>
                     <p>联系方式: {{item.contactorPhone}}</p>
@@ -53,6 +54,10 @@
             categories: {
                 type: Array,
                 default: () => []
+            },
+            quantityTitle: {
+                type: String,
+                default: () => ''
             }
         }
     }
