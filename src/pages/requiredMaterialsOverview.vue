@@ -8,12 +8,15 @@
             <el-tabs @tab-click="handleTabSwitch">
                 <el-tab-pane v-for="cat in categories" v-bind:label="cat"></el-tab-pane>
             </el-tabs>
-            <MaterialList :materials="materials"></MaterialList>
+            <MaterialList :materials="materials" :quantityTitle="'需'"></MaterialList>
             <el-button class="materials-loadmore"
                        v-on:click="loadMore" v-bind:loading="loadingMore" v-bind:disabled="!hasNextPage">
                 {{hasNextPage ? '加载更多' : '没有更多'}}
             </el-button>
         </section>
+        <div class="publish-button">
+            <a href="/required-materials">发布寻求</a>
+        </div>
     </div>
 </template>
 
@@ -156,5 +159,29 @@
 
     .materials-loadmore {
         width: 100%;
+    }
+
+    .publish-button {
+        height: 1.1rem;
+        width: 1.1rem;
+        padding: 0.1rem;
+        display: inline-block;
+        position: fixed;
+        bottom: 1rem;
+        right: 0.2rem;
+        border-radius: 50%;
+        border: 1px solid #fff;
+        text-align: center;
+        background-color: #f00;
+        z-index: 9999;
+    }
+
+    .publish-button a {
+        height: 0.8rem;
+        width: 0.8rem;
+        display: inline-block;
+        text-decoration: none !important;
+        line-height: 0.5rem;
+        color: #fff !important;
     }
 </style>
