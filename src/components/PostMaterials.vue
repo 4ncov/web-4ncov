@@ -28,10 +28,23 @@
     width: 100%;
     margin: 0.5rem 0;
 }
+.post-materials {
+    position: relative;
+}
+.post-materials > p {
+    margin-top: 0.3rem;
+    text-align: right;
+    font-weight: bold;
+}
+.post-materials > p > i {
+    margin-bottom: 0.1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
 
 .post-materials > .post-materials__title {
     text-align: center;
-    margin: 0.5rem 0;
+    margin-bottom: 0.5rem;
 }
 .post-materials > .post-materials__title > h3 {
     font-size: 0.5rem;
@@ -56,6 +69,9 @@
 
 <template>
     <div class="post-materials">
+        <p>
+            <i class="el-icon-close" @click="hanldeGoBack"></i>
+        </p>
         <div class="post-materials__title">
             <h3 v-text="labels.title"></h3>
         </div>
@@ -200,6 +216,9 @@ export default {
         }
     },
     methods: {
+        hanldeGoBack() {
+            this.$router.go(-1)
+        },
         getToken() {
             return `Bearer ${localStorage.getItem('token')}`
         },
