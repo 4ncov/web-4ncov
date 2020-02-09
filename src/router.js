@@ -7,6 +7,7 @@ import requiredMaterialOverview from './pages/requiredMaterialsOverview'
 import suppliedMaterialOverview from './pages/suppliedMaterialsOverview'
 import Login from './pages/login'
 import Register from './pages/register'
+import forgetPassword from './pages/forgetPassword'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,14 @@ const routes = [
             title: '注册'
         },
         component: Register
+    },
+    {
+        path: '/forget-pwd',
+        name: 'forget-pwd',
+        meta: {
+            title: '忘记密码'
+        },
+        component: forgetPassword
     },
     {
         path: '/required-materials',
