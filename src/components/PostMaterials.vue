@@ -11,6 +11,12 @@
 .add-materials,
 .remove-materials {
     float: right;
+    color: #409eff;
+    cursor: pointer;
+}
+.add-materials >>> span,
+.remove-materials >>> span {
+    font-size: 0.35rem;
 }
 
 .el-form-item {
@@ -19,22 +25,48 @@
 
 .submit {
     display: block;
-    margin: 0.2rem auto;
-    width: 7rem;
+    width: 100%;
+    margin: 0.5rem 0;
+}
+
+.post-materials > .post-materials__title {
+    text-align: center;
+    margin: 0.5rem 0;
+}
+.post-materials > .post-materials__title > h3 {
+    font-size: 0.5rem;
+    font-weight: normal;
+    background-color: rgba(0, 153, 255, 0.117647058823529);
+}
+.materials-item__label {
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+    display: inline-block;
+}
+.el-form-item >>> .el-form-item__label {
+    text-align: left;
+}
+.el-upload__tip {
+    font-size: 16px;
+}
+.upload {
+    text-align: center;
 }
 </style>
 
 <template>
     <div class="post-materials">
-        <h3 v-text="labels.title"></h3>
-        <el-form ref="form" :model="formData" label-width="4rem">
-            <label v-text="labels.materials"></label>
+        <div class="post-materials__title">
+            <h3 v-text="labels.title"></h3>
+        </div>
+        <el-form ref="form" :model="formData" label-width="2.5rem" size="mini">
+            <label class="materials-item__label" v-text="labels.materials"></label>
             <!-- 物资列表开始 -->
             <div class="materials">
                 <div class="materials-item" v-for="(material, i) in formData.materials" :key="material.name">
-                    <label v-text="`物资${i + 1}`"></label>
+                    <label class="materials-item__label" v-text="`物资${i + 1}`"></label>
                     <el-form-item label="种类">
-                        <el-select v-model="material.category">
+                        <el-select v-model="material.category" style="width:100%">
                             <el-option v-for="category in categoryList" :key="category" :label="category" :value="category"> </el-option>
                         </el-select>
                     </el-form-item>
@@ -47,15 +79,17 @@
                     <el-form-item label="执行标准">
                         <el-input v-model="material.standard"></el-input>
                     </el-form-item>
-                    <el-button type="primary" class="remove-materials" @click="handleRemoveMaterial(i)" v-show="formData.materials.length > 1"
-                        >移除</el-button
-                    >
+                    <div type="primary" class="remove-materials" @click="handleRemoveMaterial(i)" v-show="formData.materials.length > 1">
+                        <i class="el-icon-remove"></i>
+                    </div>
                 </div>
-                <el-button type="primary" class="add-materials" @click="handleAddMaterial">添加</el-button>
+                <div type="primary" size="mini" class="add-materials" @click="handleAddMaterial">
+                    <i class="el-icon-circle-plus"></i>
+                </div>
             </div>
             <!-- 物资列表结束 -->
             <!-- 用户信息开始 -->
-            <label v-text="labels.contactor"></label>
+            <label class="materials-item__label" v-text="labels.contactor"></label>
             <div class="other">
                 <el-form-item :label="labels.hospitalName">
                     <el-input v-model="formData.hospitalName"></el-input>
@@ -71,15 +105,18 @@
                 </el-form-item>
             </div>
             <!-- 用户信息结束 -->
-            <label>其他信息</label>
-            <!-- 图片上传 -->
-            <el-upload class="upload" action="/api/images" :on-success="handleUploadSuccess" list-type="picture">
-                <el-button size="small" type="primary">点击上传</el-button>
-                <div slot="tip" class="el-upload__tip" v-text="labels.uploadTip"></div>
-            </el-upload>
+            <label class="materials-item__label">其他信息</label>
             <el-form-item label="备注">
                 <el-input v-model="formData.comment"></el-input>
             </el-form-item>
+            <!-- 图片上传 -->
+            <el-upload drag class="upload" action="/api/images" :on-success="handleUploadSuccess" list-type="picture">
+                <i class="el-icon-upload"></i>
+                <!-- <div class="el-upload__text"><em>点击上传</em></div> -->
+                <!-- <el-button size="mini" type="primary">点击上传</el-button> -->
+                <div class="el-upload__text" v-text="labels.uploadTip"></div>
+            </el-upload>
+
             <el-button class="submit" type="primary" @click="handleSubmit">提交</el-button>
         </el-form>
     </div>
