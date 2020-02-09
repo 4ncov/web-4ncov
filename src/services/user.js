@@ -6,6 +6,6 @@ module.exports = {
     },
     isLogin() {
         const token = localStorage.getItem('token')
-        return !!toekn
+        return !!token
     }
 }
