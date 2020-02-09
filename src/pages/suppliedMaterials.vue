@@ -14,6 +14,7 @@
 <script>
 import PostMaterials from '../components/PostMaterials.vue'
 import request from '../services/request'
+import user from '../services/user'
 
 export default {
     name: 'supplied-materials',
@@ -46,6 +47,11 @@ export default {
                 address: '发货地址',
                 uploadTip: '点击上传物资图片（可选）'
             }
+        }
+    },
+    created() {
+        if (!user.isLogin()) {
+            this.$router.push('/login')
         }
     },
     methods: {

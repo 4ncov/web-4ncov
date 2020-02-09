@@ -3,5 +3,9 @@ module.exports = {
     // "token": "string"
     setInfo(token) {
         localStorage.setItem('token', token)
+    },
+    isLogin() {
+        const token = localStorage.getItem('token')
+        return !!toekn
     }
 }
