@@ -1,6 +1,6 @@
 <template>
     <div id="reg">
-        <img class="top-img" src="http://resource.guofangchao.com/4ncov/u213.png" />
+        <img class="top-img" src="http://resource.guofangchao.com/4ncov/u213.png"/>
         <div>
             <el-button-group>
                 <el-button @click="activeIndex = 0" :type="activeIndex === 0 ? 'primary' : 'info'">供应方注册申请</el-button>
@@ -26,11 +26,12 @@
                 </el-form-item>
                 <el-form-item label="是否自备物流">
                     <div class="left">
-                        <el-switch v-model="suppForm.haveLogistics" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+                        <el-switch v-model="suppForm.haveLogistics" active-color="#13ce66"
+                                   inactive-color="#ff4949"></el-switch>
                     </div>
                 </el-form-item>
                 <el-form-item label="公司资质">
-                    <UploadImg v-model="imgs.img1" />
+                    <UploadImg v-model="imgs.img1"/>
                 </el-form-item>
             </el-form>
 
@@ -66,107 +67,107 @@
 </template>
 
 <script>
-import UploadImg from '../components/UploadImg'
-import request from '../services/request'
+    import UploadImg from '../components/UploadImg'
+    import request from '../services/request'
 
-export default {
-    components: { UploadImg },
-    data() {
-        return {
-            activeIndex: 0,
-            suppForm: {
-                //公司名
-                contactorName: '',
-                //联系方式
-                contactorTelephone: '',
-                haveLogistics: true,
-                identificationNumber: '',
-                imageUrls: [''],
-                name: '',
-                password: ''
-            },
-            hospForm: {
-                //机构名
-                contactorName: '',
-                contactorTelephone: '',
-                identificationNumber: '',
-                imageUrls: [''],
-                name: '',
-                password: '',
-                uniformSocialCreditCode: ''
-            },
-            imgs: {
-                img1: '',
-                img2: ''
-            }
-        }
-    },
-    methods: {
-        //供应方注册
-        async signSupp() {
-            const data = Object.assign({}, this.suppForm)
-            data.imageUrls = [this.imgs.img1]
-            try {
-                const res = await request.post('/suppliers/sign-up', data)
-                this.$message.success('注册成功')
-                this.$router.push('/login')
-            } catch (error) {
-                console.log(error)
-                this.$message.error(error.message)
+    export default {
+        components: { UploadImg },
+        data() {
+            return {
+                activeIndex: 0,
+                suppForm: {
+                    //公司名
+                    contactorName: '',
+                    //联系方式
+                    contactorTelephone: '',
+                    haveLogistics: true,
+                    identificationNumber: '',
+                    imageUrls: [''],
+                    name: '',
+                    password: ''
+                },
+                hospForm: {
+                    //机构名
+                    contactorName: '',
+                    contactorTelephone: '',
+                    identificationNumber: '',
+                    imageUrls: [''],
+                    name: '',
+                    password: '',
+                    uniformSocialCreditCode: ''
+                },
+                imgs: {
+                    img1: '',
+                    img2: ''
+                }
             }
         },
-        async hospBtn() {
-            const data = Object.assign({}, this.hospForm)
-            data.imageUrls = [this.imgs.img2]
-            try {
-                const res = await request.post('/hospitals/sign-up', data)
-                this.$message.success('注册成功')
-                this.$router.push('/login')
-            } catch (error) {
-                console.log(error)
-                this.$message.error(error.message)
+        methods: {
+            //供应方注册
+            async signSupp() {
+                const data = Object.assign({}, this.suppForm)
+                data.imageUrls = [this.imgs.img1]
+                try {
+                    const res = await request.post('/suppliers/sign-up', data)
+                    this.$message.success('注册成功')
+                    this.$router.push(`/login?redirectTo=${encodeURIComponent(this.$route.query.redirectTo)}`)
+                } catch (error) {
+                    console.log(error)
+                    this.$message.error(error.message)
+                }
+            },
+            async hospBtn() {
+                const data = Object.assign({}, this.hospForm)
+                data.imageUrls = [this.imgs.img2]
+                try {
+                    const res = await request.post('/hospitals/sign-up', data)
+                    this.$message.success('注册成功')
+                    this.$router.push(`/login?redirectTo=${encodeURIComponent(this.$route.query.redirectTo)}`)
+                } catch (error) {
+                    console.log(error)
+                    this.$message.error(error.message)
+                }
             }
         }
     }
-}
 </script>
 
 <style scoped>
-#reg {
-    text-align: center;
-}
+    #reg {
+        text-align: center;
+    }
 
-.top-img {
-    width: 100%;
-}
+    .top-img {
+        width: 100%;
+    }
 
-.formBox {
-    padding: 1rem 0.2rem;
-    margin-right: 0.4rem;
-}
+    .formBox {
+        padding: 1rem 0.2rem;
+        margin-right: 0.4rem;
+    }
 
-.btnCls {
-    margin-top: 0.2rem;
-    padding: 0.3rem 2rem;
-}
+    .btnCls {
+        margin-top: 0.2rem;
+        padding: 0.3rem 2rem;
+    }
 
-.uploadBox {
-    width: 5rem;
-    height: 3rem;
-    background: #fefefe;
-    border: solid 1px #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-}
+    .uploadBox {
+        width: 5rem;
+        height: 3rem;
+        background: #fefefe;
+        border: solid 1px #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1rem;
+    }
 
-.uploadImg {
-    max-width: 5rem;
-    max-height: 3rem;
-}
+    .uploadImg {
+        max-width: 5rem;
+        max-height: 3rem;
+    }
 
-.left {
-    text-align: left;
-}
+    .left {
+        text-align: left;
+    }
 </style>

@@ -17,7 +17,7 @@
                 <router-link to="/forget-pwd">忘记密码?</router-link>
             </div>
             <div class="forget">
-                <router-link to="/register">点击实名注册账户</router-link>
+                <a v-on:click="handleRegister">点击实名注册账户</a>
             </div>
             <el-button @click="loginTo" class="sub" type="primary">确定</el-button>
         </div>
@@ -62,6 +62,9 @@
                 } catch (error) {
                     this.$message.error(error.message)
                 }
+            },
+            handleRegister() {
+                this.$router.push(`/register?redirectTo=${this.$route.query.redirectTo}`)
             }
         }
     }
