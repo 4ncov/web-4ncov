@@ -1,70 +1,82 @@
 <style scoped>
-.post-materials {
-    padding: 0 0.3rem;
-}
-.el-button {
-    padding: 0.1rem 0.2rem;
-}
-.el-button > span {
-    font-size: 0.25rem;
-}
-.add-materials,
-.remove-materials {
-    float: right;
-    color: #409eff;
-    cursor: pointer;
-}
-.add-materials >>> span,
-.remove-materials >>> span {
-    font-size: 0.35rem;
-}
+    .post-materials {
+        padding: 0 0.3rem;
+    }
 
-.el-form-item {
-    margin-bottom: 0.2rem;
-}
+    .el-button {
+        padding: 0.1rem 0.2rem;
+    }
 
-.submit {
-    display: block;
-    width: 100%;
-    margin: 0.5rem 0;
-}
-.post-materials {
-    position: relative;
-}
-.post-materials > p {
-    margin-top: 0.3rem;
-    text-align: right;
-    font-weight: bold;
-}
-.post-materials > p > i {
-    margin-bottom: 0.1rem;
-    font-weight: bold;
-    cursor: pointer;
-}
+    .el-button > span {
+        font-size: 0.25rem;
+    }
 
-.post-materials > .post-materials__title {
-    text-align: center;
-    margin-bottom: 0.5rem;
-}
-.post-materials > .post-materials__title > h3 {
-    font-size: 0.5rem;
-    font-weight: normal;
-    background-color: rgba(0, 153, 255, 0.117647058823529);
-}
-.materials-item__label {
-    font-weight: bold;
-    margin-bottom: 0.3rem;
-    display: inline-block;
-}
-.el-form-item >>> .el-form-item__label {
-    text-align: left;
-}
-.el-upload__tip {
-    font-size: 16px;
-}
-.upload {
-    text-align: center;
-}
+    .add-materials,
+    .remove-materials {
+        float: right;
+        color: #409eff;
+        cursor: pointer;
+    }
+
+    .add-materials >>> span,
+    .remove-materials >>> span {
+        font-size: 0.35rem;
+    }
+
+    .el-form-item {
+        margin-bottom: 0.2rem;
+    }
+
+    .submit {
+        display: block;
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+
+    .post-materials {
+        position: relative;
+    }
+
+    .post-materials > p {
+        margin-top: 0.3rem;
+        text-align: right;
+        font-weight: bold;
+    }
+
+    .post-materials > p > i {
+        margin-bottom: 0.1rem;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .post-materials > .post-materials__title {
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .post-materials > .post-materials__title > h3 {
+        font-size: 0.5rem;
+        font-weight: normal;
+        background-color: rgba(0, 153, 255, 0.117647058823529);
+    }
+
+    .materials-item__label {
+        font-weight: bold;
+        margin-bottom: 0.3rem;
+        display: inline-block;
+    }
+
+    .el-form-item >>> .el-form-item__label {
+        text-align: left;
+    }
+
+    .el-upload__tip {
+        font-size: 16px;
+    }
+
+    .upload {
+        text-align: center;
+    }
 </style>
 
 <template>
@@ -83,7 +95,8 @@
                     <label class="materials-item__label" v-text="`物资${i + 1}`"></label>
                     <el-form-item label="种类">
                         <el-select v-model="material.category" style="width:100%">
-                            <el-option v-for="category in categoryList" :key="category" :label="category" :value="category"> </el-option>
+                            <el-option v-for="category in categoryList" :key="category" :label="category"
+                                       :value="category"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="品名">
@@ -95,7 +108,8 @@
                     <el-form-item label="执行标准">
                         <el-input v-model="material.standard"></el-input>
                     </el-form-item>
-                    <div type="primary" class="remove-materials" @click="handleRemoveMaterial(i)" v-show="formData.materials.length > 1">
+                    <div type="primary" class="remove-materials" @click="handleRemoveMaterial(i)"
+                         v-show="formData.materials.length > 1">
                         <i class="el-icon-remove"></i>
                     </div>
                 </div>
@@ -127,14 +141,14 @@
             </el-form-item>
             <!-- 图片上传 -->
             <el-upload
-                drag
-                class="upload"
-                :headers="{ Authorization: getToken() }"
-                :on-error="handleUploadError"
-                :data="{ category }"
-                name="image"
-                action="/api/images"
-                :on-success="handleUploadSuccess"
+                    drag
+                    class="upload"
+                    :headers="{ Authorization: getToken() }"
+                    :on-error="handleUploadError"
+                    :data="{ category }"
+                    name="image"
+                    action="/api/images"
+                    :on-success="handleUploadSuccess"
             >
                 <i class="el-icon-upload"></i>
                 <!-- <div class="el-upload__text"><em>点击上传</em></div> -->
@@ -148,100 +162,104 @@
 </template>
 
 <script>
-const cloneDeep = v => JSON.parse(JSON.stringify(v || {}))
-// 1. 确认一下接口：
-// 寻求方注册 /api/hospitals/sign-up
-// 寻求方发布 /api/required-materials
-// 供应方注册 /api/suppliers/sign-up
-// 供应方发布 /api/supplied-materials
-// 图片上传   /api/images
-export default {
-    name: 'post-materials',
-    props: {
-        postType: {
-            type: String,
-            default: 'required'
+    import MaterialCategories from '../utils/MaterialCategories'
+
+    const cloneDeep = v => JSON.parse(JSON.stringify(v || {}))
+    // 1. 确认一下接口：
+    // 寻求方注册 /api/hospitals/sign-up
+    // 寻求方发布 /api/required-materials
+    // 供应方注册 /api/suppliers/sign-up
+    // 供应方发布 /api/supplied-materials
+    // 图片上传   /api/images
+    export default {
+        name: 'post-materials',
+        props: {
+            postType: {
+                type: String,
+                default: 'required'
+            },
+            formData: {
+                type: Object,
+                default: () => ({
+                    // 发布/供货机构名称
+                    organisationName: '',
+                    // 联系人
+                    contactorName: '',
+                    // 联系电话
+                    contactorPhone: '',
+                    // 收货/发货地址
+                    address: '',
+                    // 物资图片, 支持多张
+                    imageUrls: [],
+                    // 物资信息
+                    materials: [
+                        {
+                            // 物资类别
+                            category: '',
+                            // 物资名称
+                            name: '',
+                            // 物资数量
+                            quantity: '',
+                            // 执行标准
+                            standard: ''
+                        }
+                    ],
+                    // 备注
+                    comment: ''
+                })
+            },
+            labels: {
+                type: Object,
+                default: () => ({})
+            }
         },
-        formData: {
-            type: Object,
-            default: () => ({
-                // 发布/供货机构名称
-                organisationName: '',
-                // 联系人
-                contactorName: '',
-                // 联系电话
-                contactorPhone: '',
-                // 收货/发货地址
-                address: '',
-                // 物资图片, 支持多张
-                imageUrls: [],
-                // 物资信息
-                materials: [
-                    {
-                        // 物资类别
-                        category: '',
-                        // 物资名称
-                        name: '',
-                        // 物资数量
-                        quantity: '',
-                        // 执行标准
-                        standard: ''
-                    }
-                ],
-                // 备注
-                comment: ''
-            })
+        data() {
+            return {
+                categoryList: MaterialCategories
+            }
         },
-        labels: {
-            type: Object,
-            default: () => ({})
-        }
-    },
-    data() {
-        return {
-            categoryList: ['口罩', '防护眼镜', '防护服', '医用帽', '防护面罩', '核酸检测试剂']
-        }
-    },
-    created() {
-        this.materialBackup = cloneDeep(this.formData.materials)
-    },
-    computed: {
-        // eslint-disable-next-line vue/return-in-computed-property
-        category() {
-            if (this.postType === 'required') {
-                return '寻求图片'
-            } else if (this.postType === 'supplied') {
-                return '供应图片'
+        computed: {
+            // eslint-disable-next-line vue/return-in-computed-property
+            category() {
+                if (this.postType === 'required') {
+                    return '寻求图片'
+                } else if (this.postType === 'supplied') {
+                    return '供应图片'
+                }
+            }
+        },
+        methods: {
+            hanldeGoBack() {
+                this.$router.go(-1)
+            },
+            getToken() {
+                return `Bearer ${localStorage.getItem('token')}`
+            },
+            handleUploadError(err, file, fileList) {
+                err = JSON.parse(err.message)
+                this.$message({
+                    type: 'error',
+                    message: err.message
+                })
+            },
+            handleSubmit() {
+                this.$emit('submit', this.formData)
+            },
+            handleAddMaterial() {
+                this.formData.materials.push({
+                    category: '',
+                    name: '',
+                    quantity: '',
+                    standard: ''
+                })
+            },
+            handleRemoveMaterial(i) {
+                this.formData.materials.splice(i, 1)
+            },
+            handleUploadSuccess(res) {
+                const url = res.data.url
+                this.formData.imageUrls.push(url)
             }
         }
-    },
-    methods: {
-        hanldeGoBack() {
-            this.$router.go(-1)
-        },
-        getToken() {
-            return `Bearer ${localStorage.getItem('token')}`
-        },
-        handleUploadError(err, file, fileList) {
-            err = JSON.parse(err.message)
-            this.$message({
-                type: 'error',
-                message: err.message
-            })
-        },
-        handleSubmit() {
-            this.$emit('submit', this.formData)
-        },
-        handleAddMaterial() {
-            this.formData.materials.push(cloneDeep(this.materialBackup))
-        },
-        handleRemoveMaterial(i) {
-            this.formData.materials.splice(i, 1)
-        },
-        handleUploadSuccess(res) {
-            const url = res.data.url
-            this.formData.imageUrls.push(url)
-        }
     }
-}
 </script>
