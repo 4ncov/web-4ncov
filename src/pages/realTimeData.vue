@@ -78,14 +78,6 @@ export default {
     },
     methods: {
         dataProcessor() {
-            this.option.tooltip = {
-                trigger: 'item',
-                showDelay: 0,
-                transitionDuration: 0.2,
-                formatter: function(params) {
-                    return params.name + ': 123'
-                }
-            }
             this.option.visualMap = {
                 left: 'right',
                 min: 0,
