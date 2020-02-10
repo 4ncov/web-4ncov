@@ -3,7 +3,7 @@
         <el-upload
             v-show="status !== 1"
             class="uploadBox"
-            :data="{ category: 'test' }"
+            :data="{ category: type }"
             name="image"
             action="/api/images"
             :before-upload="handleBefore"
@@ -28,6 +28,10 @@ export default {
         value: {
             type: String,
             default: ''
+        },
+        type: {
+            type: String,
+            default: '身份验证'
         }
     },
     data() {
