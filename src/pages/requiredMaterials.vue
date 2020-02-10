@@ -51,7 +51,7 @@
         },
         created() {
             if (!user.isLogin()) {
-                this.$router.push('/login')
+                this.$router.push(`/login?redirectTo=${encodeURIComponent('/required-materials')}`)
             }
         },
         methods: {

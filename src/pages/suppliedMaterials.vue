@@ -7,7 +7,7 @@
 <template>
     <div class="supplied-materials">
         <img class="topImg" src="http://resource.guofangchao.com/4ncov/u213.png"/>
-        <PostMaterials :labels="labels" @submit="handleSubmit"></PostMaterials>
+        <PostMaterials :labels="labels" :postType="'supplied'" @submit="handleSubmit"></PostMaterials>
     </div>
 </template>
 
@@ -51,7 +51,7 @@
         },
         created() {
             if (!user.isLogin()) {
-                this.$router.push('/login')
+                this.$router.push(`/login?redirectTo=${encodeURIComponent('/supplied-materials')}`)
             }
         },
         methods: {
