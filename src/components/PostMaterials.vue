@@ -230,7 +230,11 @@
         },
         methods: {
             hanldeGoBack() {
-                this.$router.go(-1)
+                if (this.postType === 'required') {
+                    this.$router.push('/required-materials-overview')
+                } else if (this.postType === 'supplied') {
+                    this.$router.push('/supplied-materials-overview')
+                }
             },
             getToken() {
                 return `Bearer ${localStorage.getItem('token')}`

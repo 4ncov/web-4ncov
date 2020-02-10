@@ -19,7 +19,10 @@ const routes = [
         meta: {
             title: '登录'
         },
-        component: Login
+        component: Login,
+        props: {
+            redirectTo: ''
+        }
     },
     {
         path: '/register',
@@ -27,7 +30,10 @@ const routes = [
         meta: {
             title: '注册'
         },
-        component: Register
+        component: Register,
+        props: {
+            redirectTo: ''
+        }
     },
     {
         path: '/forget-pwd',
