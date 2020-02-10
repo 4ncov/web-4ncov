@@ -58,8 +58,8 @@
             handleSubmit(formData) {
                 request.post('/required-materials', formData).then(res => {
                     this.$message({ type: 'success', message: '物资需求信息发布成功' })
+                    this.$router.push({ name: 'required-materials-overview' })
                 })
-                this.$router.push({ name: 'required-materials-overview' })
             }
         },
         components: { PostMaterials }
