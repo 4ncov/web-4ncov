@@ -91,7 +91,7 @@
             <label class="materials-item__label" v-text="labels.materials"></label>
             <!-- 物资列表开始 -->
             <div class="materials">
-                <div class="materials-item" v-for="(material, i) in formData.materials" :key="material.name">
+                <div class="materials-item" v-for="(material, i) in formData.materials" :key="i">
                     <label class="materials-item__label" v-text="`物资${i + 1}`"></label>
                     <el-form-item label="种类">
                         <el-select v-model="material.category" style="width:100%">
