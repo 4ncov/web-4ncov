@@ -51,7 +51,9 @@ export default {
             this.percent = 0
         },
         handleProgress(event) {
-            this.percent = event.percent
+            if (event.percent < 100) {
+                this.percent = event.percent
+            }
         },
         handleBefore(file) {
             this.status = 1
@@ -64,7 +66,7 @@ export default {
         },
         handleUploadSuccess(res) {
             this.status = 2
-            this.percent = 0
+            this.percent = 100
             const url = res.data.url
             this.$emit('input', url)
         }
