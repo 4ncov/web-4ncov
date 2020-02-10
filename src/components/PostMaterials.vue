@@ -148,6 +148,7 @@
                     :data="{ category }"
                     name="image"
                     action="/api/images"
+                    :on-progress="handleUploadInProgress"
                     :on-success="handleUploadSuccess"
             >
                 <i class="el-icon-upload"></i>
@@ -156,7 +157,10 @@
                 <div class="el-upload__text" v-text="labels.uploadTip"></div>
             </el-upload>
 
-            <el-button class="submit" type="primary" @click="handleSubmit">提交</el-button>
+            <el-button class="submit" type="primary" @click="handleSubmit"
+                       v-bind:disabled="isUploading" v-bind:loading="isUploading">
+                提交
+            </el-button>
         </el-form>
     </div>
 </template>
@@ -215,7 +219,8 @@
         },
         data() {
             return {
-                categoryList: MaterialCategories
+                categoryList: MaterialCategories,
+                isUploading: false
             }
         },
         computed: {
@@ -239,12 +244,21 @@
             getToken() {
                 return `Bearer ${localStorage.getItem('token')}`
             },
+            handleUploadInProgress() {
+                this.isUploading = true
+            },
+            handleUploadSuccess(res) {
+                const url = res.data.url
+                this.formData.imageUrls.push(url)
+                this.isUploading = false
+            },
             handleUploadError(err, file, fileList) {
                 err = JSON.parse(err.message)
                 this.$message({
                     type: 'error',
                     message: err.message
                 })
+                this.isUploading = false
             },
             handleSubmit() {
                 this.$emit('submit', this.formData)
@@ -259,10 +273,6 @@
             },
             handleRemoveMaterial(i) {
                 this.formData.materials.splice(i, 1)
-            },
-            handleUploadSuccess(res) {
-                const url = res.data.url
-                this.formData.imageUrls.push(url)
             }
         }
     }
