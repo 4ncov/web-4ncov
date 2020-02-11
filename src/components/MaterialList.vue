@@ -34,7 +34,7 @@
                     <p><strong>{{item.organisationName}}</strong></p>
                     <p class="material-item__section__quantity">
                         <strong>{{quantityTitle}}：{{item.material.quantity}}件</strong></p>
-                    <p>收货地址: {{item.address}}</p>
+                    <p>{{addressTitle}}: {{item.address}}</p>
                     <p>联系人: {{item.contactorName}}</p>
                     <p>联系方式: {{item.contactorPhone}}</p>
                 </div>
@@ -56,6 +56,10 @@
                 default: () => []
             },
             quantityTitle: {
+                type: String,
+                default: () => ''
+            },
+            addressTitle: {
                 type: String,
                 default: () => ''
             }
