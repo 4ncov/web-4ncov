@@ -1,7 +1,8 @@
 <template>
     <div>
+        <!-- v-show="status !== 1" -->
         <el-upload
-            v-show="status !== 1"
+            v-loading="status === 1"
             class="uploadBox"
             :data="{ category: type }"
             name="image"
@@ -15,14 +16,11 @@
             <img v-if="value !== ''" class="uploadImgEnd" :src="value" />
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
-        <div class="uploadImg" v-show="status == 1">
-            <img :src="tmp" />
-            <el-progress :percentage="percent"></el-progress>
-        </div>
     </div>
 </template>
 
 <script>
+import Bus from '../utils/bus'
 export default {
     props: {
         value: {
@@ -70,13 +68,18 @@ export default {
             const url = res.data.url
             this.$emit('input', url)
         }
+    },
+    watch: {
+        status(newVal) {
+            Bus.$emit('registerFileUpload', newVal)
+        }
     }
 }
 </script>
 
 <style scoped>
 .uploadBox {
-    width: 5rem;
+    width: 100%;
     height: 3rem;
     background: #fefefe;
     border: solid 1px #ccc;
@@ -84,14 +87,15 @@ export default {
     justify-content: center;
     align-items: center;
     font-size: 1rem;
+    border-radius: 0.2rem;
 }
 .uploadImg {
-    width: 5rem;
+    width: auto;
     height: 3rem;
 }
 .uploadImg img {
-    max-width: 5rem;
-    max-height: 3rem;
+    width: auto;
+    height: 3rem;
 }
 .uploadImgEnd {
     height: 2.5rem;
