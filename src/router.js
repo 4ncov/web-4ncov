@@ -47,7 +47,8 @@ const routes = [
         path: '/required-materials',
         name: 'required-materials',
         meta: {
-            title: '提交物资寻求'
+            title: '提交物资寻求',
+            auth: true
         },
         component: requiredMaterials
     },
@@ -55,7 +56,8 @@ const routes = [
         path: '/supplied-materials',
         name: 'supplied-materials',
         meta: {
-            title: '提交物资供应'
+            title: '提交物资供应',
+            auth: true
         },
         component: suppliedMaterials
     },
@@ -95,7 +97,18 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     document.title = to.meta.title || '首页'
-    next()
+    // 以下的权限检测仅支持单层路由,
+    // 如果需要做到组件层面的权限检测请递归一下
+    if (to.meta.auth) {
+        const token = localStorage.getItem('token')
+        if (token) {
+            next()
+        } else {
+            next(`/login?redirect=${to.path}`)
+        }
+    } else {
+        next()
+    }
 })
 
 export default router
