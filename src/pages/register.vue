@@ -59,7 +59,7 @@
                     <el-input v-model="hospForm.identificationNumber"></el-input>
                 </el-form-item>
                 <el-form-item label="申请人身份证明">
-                    <el-input v-model="imgs.img2"></el-input>
+                    <UploadImg v-model="imgs.img2" />
                 </el-form-item>
             </el-form>
             <el-button @click="hospBtn" class="btnCls" style="width:100%" size="mini" type="primary">提交</el-button>
