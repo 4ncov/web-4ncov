@@ -178,5 +178,6 @@
         text-decoration: none !important;
         line-height: 0.5rem;
         color: #fff !important;
+        font-size: 0.35rem;
     }
 </style>
