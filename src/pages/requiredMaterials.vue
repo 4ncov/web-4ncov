@@ -14,29 +14,11 @@
 <script>
     import PostMaterials from '../components/PostMaterials.vue'
     import request from '../services/request'
-    import user from '../services/user'
 
     export default {
         name: 'required-materials',
         data() {
             return {
-                // 如果required-materials和supplied-materials接口字段不一样才需要传
-                // formData: {
-                //   address: '',
-                //   comment: '',
-                //   contactorName: '',
-                //   contactorPhone: '',
-                //   hospitalName: '',
-                //   imageUrls: [],
-                //   materials: [
-                //     {
-                //       category: '',
-                //       name: '',
-                //       quantity: '',
-                //       standard: ''
-                //     }
-                //   ]
-                // },
                 labels: {
                     title: '物资寻求信息发布',
                     materials: '所需医疗物资信息',
@@ -47,11 +29,6 @@
                     address: '收货地址',
                     uploadTip: '点击上传物资图片（可选）'
                 }
-            }
-        },
-        created() {
-            if (!user.isLogin()) {
-                this.$router.push(`/login?redirectTo=${encodeURIComponent('/required-materials')}`)
             }
         },
         methods: {
