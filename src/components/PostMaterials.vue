@@ -143,7 +143,7 @@
             <el-upload
                     drag
                     class="upload"
-                    :headers="{ Authorization: getToken() }"
+                    :headers="{ Authorization: getAuthorizationHeader() }"
                     :on-error="handleUploadError"
                     :data="{ category }"
                     name="image"
@@ -167,14 +167,8 @@
 
 <script>
     import MaterialCategories from '../utils/MaterialCategories'
+    import Cookie from 'js-cookie'
 
-    const cloneDeep = v => JSON.parse(JSON.stringify(v || {}))
-    // 1. 确认一下接口：
-    // 寻求方注册 /api/hospitals/sign-up
-    // 寻求方发布 /api/required-materials
-    // 供应方注册 /api/suppliers/sign-up
-    // 供应方发布 /api/supplied-materials
-    // 图片上传   /api/images
     export default {
         name: 'post-materials',
         props: {
@@ -241,8 +235,8 @@
                     this.$router.push('/supplied-materials-overview')
                 }
             },
-            getToken() {
-                return `Bearer ${localStorage.getItem('token')}`
+            getAuthorizationHeader() {
+                return `Bearer ${Cookie.get('token')}`
             },
             handleUploadInProgress() {
                 this.isUploading = true

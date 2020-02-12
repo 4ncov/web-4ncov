@@ -1,13 +1,14 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import Bus from '../utils/bus'
+import Cookie from 'js-cookie'
 
 const request = axios.create({
     baseURL: '/api'
 })
 request.interceptors.request.use(function(req) {
     Bus.$emit('loading', true)
-    const token = localStorage.getItem('token')
+    const token = Cookie.get('token')
     if (token) req.headers.Authorization = 'Bearer ' + token
     return req
 })
