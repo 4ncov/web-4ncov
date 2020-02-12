@@ -1,7 +1,7 @@
 <template>
     <div>
         <Nav/>
-        <dataMap :title="title" :dataTime="dataTime"/>
+        <dataMap v-if="featureToggle" :title="title" :dataTime="dataTime"/>
         <section class="listing">
             <div class="gap"></div>
             <p class="listing__title">查询物资供应方</p>
@@ -28,6 +28,7 @@
     import categories from '../utils/MaterialCategories'
     import SuppliedMaterialService from '../services/SuppliedMaterial'
     import UserService from '../services/user'
+    import featureToggle from '../utils/FeatureToggle'
 
     export default {
         name: 'supplied-materials-overview',
@@ -35,6 +36,7 @@
         mixins: [mapRefreshMixin],
         data() {
             return {
+                featureToggle,
                 title: '医疗物资供应分布地图',
                 dataTime: '2020.01.29 15:30',
                 materials: [],

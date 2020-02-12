@@ -9,7 +9,7 @@
             <img src="http://resource.guofangchao.com/4ncov/u213.png"/>
         </div>
         <div id="navs">
-            <router-link :to="{ path: '/real-time-data' }">实时数据</router-link>
+            <router-link v-if="featureToggle" :to="{ path: '/real-time-data' }">实时数据</router-link>
             <router-link :to="{ path: '/required-materials-overview' }">物资寻求</router-link>
             <router-link :to="{ path: '/supplied-materials-overview' }">物资供应</router-link>
         </div>
@@ -17,10 +17,13 @@
 </template>
 
 <script>
+    import featureToggle from '../utils/FeatureToggle'
+
     export default {
         data() {
             return {
-                active: 0
+                active: 0,
+                featureToggle
             }
         }
     }
