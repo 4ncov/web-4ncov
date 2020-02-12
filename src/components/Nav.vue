@@ -45,7 +45,7 @@
 
     #navs {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: center;
         padding: 0.25rem 0.2rem 0.1rem 0.2rem;
         background: #fff;
