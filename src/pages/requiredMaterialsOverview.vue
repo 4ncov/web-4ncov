@@ -1,7 +1,7 @@
 <template>
     <div>
         <Nav/>
-        <dataMap :title="title" :dataTime="dataTime"/>
+        <dataMap v-if="featureToggle" :title="title" :dataTime="dataTime"/>
         <section class="listing">
             <div class="gap"></div>
             <p class="listing__title">查询物资寻求方</p>
@@ -28,6 +28,7 @@
     import categories from '../utils/MaterialCategories'
     import RequiredMaterialService from '../services/RequiredMaterial'
     import UserService from '../services/user'
+    import featureToggle from '../utils/FeatureToggle'
 
     export default {
         name: 'required-materials-overview',
@@ -45,7 +46,8 @@
                 hasNextPage: true,
                 selectedCategory: categories[0],
                 isHospital: UserService.isHospital(),
-                isLogin: UserService.isLogin()
+                isLogin: UserService.isLogin(),
+                featureToggle
             }
         },
         created() {

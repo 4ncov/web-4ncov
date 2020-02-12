@@ -8,11 +8,12 @@ import suppliedMaterialOverview from './pages/suppliedMaterialsOverview'
 import Login from './pages/login'
 import Register from './pages/register'
 import forgetPassword from './pages/forgetPassword'
+import featureToggle from './utils/FeatureToggle'
 
 Vue.use(VueRouter)
 
 const routes = [
-    { path: '', redirect: '/real-time-data' },
+    { path: '', redirect: featureToggle ? '/real-time-data' : '/required-materials-overview' },
     {
         path: '/login',
         name: 'Login',
@@ -86,7 +87,7 @@ const routes = [
         component: suppliedMaterialOverview
     },
     // 其他页面一律跳回主页实时数据，有404可以加个TODO:
-    { path: '*', redirect: '/real-time-data' }
+    { path: '*', redirect: featureToggle ? '/real-time-data' : '/required-materials-overview' }
 ]
 
 const router = new VueRouter({
