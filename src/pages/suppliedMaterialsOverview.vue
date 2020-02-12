@@ -156,8 +156,8 @@
     }
 
     .publish-button {
-        height: 1.1rem;
-        width: 1.1rem;
+        height: 1.3rem;
+        width: 1.3rem;
         padding: 0.1rem;
         display: inline-block;
         position: fixed;
@@ -173,6 +173,7 @@
     .publish-button a {
         height: 0.8rem;
         width: 0.8rem;
+        padding: 0.15rem;
         display: inline-block;
         text-decoration: none !important;
         line-height: 0.5rem;
