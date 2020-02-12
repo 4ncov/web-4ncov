@@ -9,6 +9,7 @@ import Login from './pages/login'
 import Register from './pages/register'
 import forgetPassword from './pages/forgetPassword'
 import featureToggle from './utils/FeatureToggle'
+import UserService from './services/user'
 
 Vue.use(VueRouter)
 
@@ -101,11 +102,10 @@ router.beforeEach((to, from, next) => {
     // 以下的权限检测仅支持单层路由,
     // 如果需要做到组件层面的权限检测请递归一下
     if (to.meta.auth) {
-        const token = localStorage.getItem('token')
-        if (token) {
+        if (UserService.isLogin()) {
             next()
         } else {
-            next(`/login?redirect=${to.path}`)
+            next({ path: `/login?redirectTo=${to.path}`, replace: true })
         }
     } else {
         next()
