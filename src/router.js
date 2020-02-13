@@ -43,7 +43,8 @@ const routes = [
         meta: {
             title: '忘记密码'
         },
-        component: forgetPassword
+        component: forgetPassword,
+        redirect: featureToggle || '/required-materials-overview'
     },
     {
         path: '/required-materials',
@@ -69,7 +70,8 @@ const routes = [
         meta: {
             title: '实时数据'
         },
-        component: realTimeData
+        component: realTimeData,
+        redirect: featureToggle || '/required-materials-overview'
     },
     {
         path: '/required-materials-overview',

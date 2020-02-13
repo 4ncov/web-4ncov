@@ -21,9 +21,6 @@
                 <el-form-item label="登录密码">
                     <el-input v-model="suppForm.password"></el-input>
                 </el-form-item>
-                <el-form-item label="身份证号">
-                    <el-input v-model="suppForm.identificationNumber"></el-input>
-                </el-form-item>
                 <el-form-item>
                     <template slot="label"><span class="switch-label">是否自备物流</span></template>
                     <div class="left">
@@ -54,12 +51,6 @@
                 </el-form-item>
                 <el-form-item label="18位社会统一信用代码">
                     <el-input v-model="hospForm.uniformSocialCreditCode"></el-input>
-                </el-form-item>
-                <el-form-item label="身份证号">
-                    <el-input v-model="hospForm.identificationNumber"></el-input>
-                </el-form-item>
-                <el-form-item label="申请人身份证明">
-                    <UploadImg v-model="imgs.img2" />
                 </el-form-item>
             </el-form>
             <el-button @click="hospBtn" class="btnCls" style="width:100%" size="mini" type="primary">提交</el-button>
