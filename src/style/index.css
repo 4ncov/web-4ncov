@@ -1,3 +1,7 @@
+@font-face {  
+  font-family: 'YouSheBiaoTiHei';  
+  src: url('../assets//fonts/YouSheBiaoTiHei.ttf'); 
+}
 .title {
   padding: 0.3rem 0.5rem;
 }
