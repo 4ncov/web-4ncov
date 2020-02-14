@@ -6,9 +6,10 @@
             <div class="gap"></div>
             <p class="listing__title">查询物资寻求方</p>
             <el-tabs @tab-click="handleTabSwitch">
-                <el-tab-pane v-for="cat in categories" :key="cat" v-bind:label="cat"></el-tab-pane>
+                <el-tab-pane v-for="cat in categories" :key="cat.id" v-bind:label="cat.name"></el-tab-pane>
             </el-tabs>
-            <MaterialList :materials="materials" quantityTitle="需" addressTitle="收货地址"></MaterialList>
+            <MaterialList v-if="categories.length > 0" :categories="categories" :materials="materials"
+                          quantityTitle="需" addressTitle="收货地址"></MaterialList>
             <el-button class="materials-loadmore" v-on:click="loadMore" v-bind:loading="loadingMore"
                        v-bind:disabled="!hasNextPage">
                 {{ hasNextPage ? '加载更多' : '没有更多' }}
@@ -25,8 +26,8 @@
     import Nav from '../components/Nav'
     import dataMap from '../components/dataMap'
     import MaterialList from '../components/MaterialList'
-    import categories from '../utils/MaterialCategories'
     import RequiredMaterialService from '../services/RequiredMaterial'
+    import MaterialCategoryService from '../services/MaterialCategory'
     import UserService from '../services/user'
     import featureToggle from '../utils/FeatureToggle'
 
@@ -39,25 +40,27 @@
                 title: '医疗物资需求分布地图',
                 dataTime: '2020.01.29 15:30',
                 materials: [],
-                categories,
+                categories: [],
                 page: 1,
                 size: 10,
                 loadingMore: false,
                 hasNextPage: true,
-                selectedCategory: categories[0],
+                selectedCategory: '',
                 isHospital: UserService.isHospital(),
                 isLogin: UserService.isLogin(),
                 featureToggle
             }
         },
-        created() {
-            RequiredMaterialService.getRequiredMaterials(this.page, this.size, this.selectedCategory).then(materials => {
-                if (materials.length === 0) {
-                    this.hasNextPage = false
-                    return
-                }
-                this.materials = materials
-            })
+        async created() {
+            this.categories = await MaterialCategoryService.getAllCategories()
+            this.selectedCategory = this.categories[0].name
+            const materials = await RequiredMaterialService
+                .getRequiredMaterials(this.page, this.size, this.selectedCategory)
+            if (materials.length === 0) {
+                this.hasNextPage = false
+                return
+            }
+            this.materials = materials
         },
         computed: {},
         methods: {

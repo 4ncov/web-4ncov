@@ -6,7 +6,7 @@
             <div class="gap"></div>
             <p class="listing__title">查询物资供应方</p>
             <el-tabs @tab-click="handleTabSwitch">
-                <el-tab-pane v-for="cat in categories" :key="cat" v-bind:label="cat"></el-tab-pane>
+                <el-tab-pane v-for="cat in categories" :key="cat.id" v-bind:label="cat.name"></el-tab-pane>
             </el-tabs>
             <MaterialList :materials="materials" quantityTitle="可提供" addressTitle="供货地址"></MaterialList>
             <el-button class="materials-loadmore" v-on:click="loadMore" v-bind:loading="loadingMore"
@@ -25,8 +25,8 @@
     import Nav from '../components/Nav'
     import dataMap from '../components/dataMap'
     import MaterialList from '../components/MaterialList'
-    import categories from '../utils/MaterialCategories'
     import SuppliedMaterialService from '../services/SuppliedMaterial'
+    import MaterialCategoryService from '../services/MaterialCategory'
     import UserService from '../services/user'
     import featureToggle from '../utils/FeatureToggle'
 
@@ -40,24 +40,26 @@
                 title: '医疗物资供应分布地图',
                 dataTime: '2020.01.29 15:30',
                 materials: [],
-                categories,
+                categories: [],
                 page: 1,
                 size: 10,
                 loadingMore: false,
                 hasNextPage: true,
-                selectedCategory: categories[0],
+                selectedCategory: '',
                 isSupplier: UserService.isSupplier(),
                 isLogin: UserService.isLogin()
             }
         },
-        created() {
-            SuppliedMaterialService.getSuppliedMaterials(this.page, this.size, this.selectedCategory).then(materials => {
-                if (materials.length === 0) {
-                    this.hasNextPage = false
-                    return
-                }
-                this.materials = materials
-            })
+        async created() {
+            this.categories = await MaterialCategoryService.getAllCategories()
+            this.selectedCategory = this.categories[0].name
+            const materials = await SuppliedMaterialService
+                .getSuppliedMaterials(this.page, this.size, this.selectedCategory)
+            if (materials.length === 0) {
+                this.hasNextPage = false
+                return
+            }
+            this.materials = materials
         },
         computed: {},
         methods: {

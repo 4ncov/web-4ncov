@@ -95,8 +95,8 @@
                     <label class="materials-item__label" v-text="`物资${i + 1}`"></label>
                     <el-form-item label="种类">
                         <el-select v-model="material.category" style="width:100%">
-                            <el-option v-for="category in categoryList" :key="category" :label="category"
-                                       :value="category"></el-option>
+                            <el-option v-for="category in categoryList" :key="category.id" :label="category.name"
+                                       :value="category.name"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="品名">
@@ -166,7 +166,7 @@
 </template>
 
 <script>
-    import MaterialCategories from '../utils/MaterialCategories'
+    import MaterialCategoryService from '../services/MaterialCategory'
     import Cookie from 'js-cookie'
 
     export default {
@@ -213,9 +213,12 @@
         },
         data() {
             return {
-                categoryList: MaterialCategories,
+                categoryList: [],
                 isUploading: false
             }
+        },
+        async created() {
+            this.categoryList = await MaterialCategoryService.getAllCategories()
         },
         computed: {
             // eslint-disable-next-line vue/return-in-computed-property

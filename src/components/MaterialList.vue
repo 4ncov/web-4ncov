@@ -33,7 +33,11 @@
                 <div class="material-item__section">
                     <p><strong>{{item.organisationName}}</strong></p>
                     <p class="material-item__section__quantity">
-                        <strong>{{quantityTitle}}：{{item.material.quantity}}件</strong></p>
+                        <strong>
+                            {{quantityTitle}}：
+                            {{item.material.quantity}}{{categoryNameUnitMap[item.material.category]}}
+                        </strong>
+                    </p>
                     <p>{{addressTitle}}: {{item.address}}</p>
                     <p>联系人: {{item.contactorName}}</p>
                     <p>联系方式: {{item.contactorPhone}}</p>
@@ -62,6 +66,13 @@
             addressTitle: {
                 type: String,
                 default: () => ''
+            }
+        },
+        data() {
+            return {
+                categoryNameUnitMap: this.categories
+                    .map(cat => ({ [cat.name]: cat.unit }))
+                    .reduce((current, incoming) => Object.assign(current, incoming))
             }
         }
     }
