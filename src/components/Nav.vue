@@ -12,14 +12,24 @@
             </div>
             <div id="navs">
                 <!-- <router-link v-if="featureToggle" :to="{ path: '/real-time-data' }">实时数据</router-link> -->
-                <div class="nav-tabs" :class="getTabClass('required-materials-overview')">
+                <router-link
+                    tag="div"
+                    :to="{ path: '/required-materials-overview' }"
+                    class="nav-tabs"
+                    :class="getTabClass('required-materials-overview')"
+                >
                     <img src="imgs/icon_qiu@2x.webp" alt="" />
-                    <router-link :to="{ path: '/required-materials-overview' }">物资寻求</router-link>
-                </div>
-                <div class="nav-tabs" :class="getTabClass('supplied-materials-overview')">
+                    <span>物资寻求</span>
+                </router-link>
+                <router-link
+                    tag="div"
+                    :to="{ path: '/supplied-materials-overview' }"
+                    class="nav-tabs"
+                    :class="getTabClass('supplied-materials-overview')"
+                >
                     <img src="imgs/icon_gong@2x.webp" alt="" />
-                    <router-link :to="{ path: '/supplied-materials-overview' }">物资供应</router-link>
-                </div>
+                    <span>物资供应</span>
+                </router-link>
             </div>
         </div>
         <div class="supply-info">
@@ -122,7 +132,7 @@ export default {
 .nav-tabs:last-child {
     left: 3.6rem;
 }
-.nav-tabs a {
+.nav-tabs span {
     /* width: 1.48rem; */
     /* height: 0.36rem; */
     font-size: 0.37rem;
@@ -134,14 +144,14 @@ export default {
     text-decoration: none;
     margin-left: 0.2rem;
 }
-.selected a {
+.selected span {
     color: rgba(252, 137, 47, 1);
 }
 .supply-info {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 0.37rem 0.4rem;
+    padding: 0.37rem 0.4rem 0;
 }
 .supply-info__content {
     width: 4.4rem;
