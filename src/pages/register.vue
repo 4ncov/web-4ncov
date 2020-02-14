@@ -19,7 +19,7 @@
                     <el-input v-model="suppForm.contactorTelephone"></el-input>
                 </el-form-item>
                 <el-form-item label="登录密码">
-                    <el-input v-model="suppForm.password"></el-input>
+                    <el-input v-model="suppForm.password" show-password></el-input>
                 </el-form-item>
                 <el-form-item>
                     <template slot="label"><span class="switch-label">是否自备物流</span></template>

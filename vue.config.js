@@ -3,7 +3,7 @@ module.exports = {
     devServer: {
         proxy: {
             '/api': {
-                target: 'https://api-dev.4ncov.com',
+                target: 'https://dev.4ncov.com/api',
                 changeOrigin: true,
                 headers: {
                     host: 'api-dev.4ncov.com'
