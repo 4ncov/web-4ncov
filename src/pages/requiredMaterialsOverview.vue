@@ -8,7 +8,8 @@
             <el-tabs @tab-click="handleTabSwitch">
                 <el-tab-pane v-for="cat in categories" :key="cat.id" v-bind:label="cat.name"></el-tab-pane>
             </el-tabs>
-            <MaterialList :materials="materials" quantityTitle="需" addressTitle="收货地址"></MaterialList>
+            <MaterialList v-if="categories.length > 0" :categories="categories" :materials="materials"
+                          quantityTitle="需" addressTitle="收货地址"></MaterialList>
             <el-button class="materials-loadmore" v-on:click="loadMore" v-bind:loading="loadingMore"
                        v-bind:disabled="!hasNextPage">
                 {{ hasNextPage ? '加载更多' : '没有更多' }}
