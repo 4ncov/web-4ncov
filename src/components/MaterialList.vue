@@ -7,7 +7,7 @@
                 <el-row class="material-item__section">
                     <el-col :span="6">
                         <el-image style="width: 100%; height: 100%"
-                                  :src="item.imageUrls && item.imageUrls[0]"
+                                  :src="item.material.imageUrls && item.material.imageUrls[0]"
                                   :fit="'fill'">
                             <div slot="error" class="image-slot">
                                 暂无图片
