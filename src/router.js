@@ -5,6 +5,7 @@ import suppliedMaterials from './pages/suppliedMaterials.vue'
 import realTimeData from './pages/realTimeData'
 import requiredMaterialOverview from './pages/requiredMaterialsOverview'
 import suppliedMaterialOverview from './pages/suppliedMaterialsOverview'
+import contactForm from './pages/contactForm'
 import Login from './pages/login'
 import Register from './pages/register'
 import forgetPassword from './pages/forgetPassword'
@@ -88,6 +89,14 @@ const routes = [
             title: '物资供应'
         },
         component: suppliedMaterialOverview
+    },
+    {
+        path: '/contact-us',
+        name: 'contact-us',
+        meta: {
+            title: '联系我们'
+        },
+        component: contactForm
     },
     // 其他页面一律跳回主页实时数据，有404可以加个TODO:
     { path: '*', redirect: featureToggle ? '/real-time-data' : '/required-materials-overview' }

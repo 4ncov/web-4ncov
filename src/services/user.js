@@ -1,4 +1,5 @@
 import Cookie from 'js-cookie'
+import request from '../services/request'
 
 export default {
     setInfo(token, expiresAt, role) {
@@ -14,5 +15,16 @@ export default {
     },
     isHospital() {
         return Cookie.get('role') === 'HOSPITAL'
+    },
+    getToken() {
+        return Cookie.get('token')
+    },
+    async getMyDetail() {
+        const response = await request({
+            url: '/users/me',
+            method: 'get',
+            headers: { 'Authorization': `Bearer ${Cookie.get('token')}` }
+        })
+        return response.data
     }
 }
