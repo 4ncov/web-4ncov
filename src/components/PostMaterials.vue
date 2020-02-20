@@ -73,10 +73,6 @@
     .el-upload__tip {
         font-size: 16px;
     }
-
-    .upload {
-        text-align: center;
-    }
 </style>
 
 <template>
@@ -107,6 +103,28 @@
                     </el-form-item>
                     <el-form-item label="执行标准">
                         <el-input v-model="material.standard"></el-input>
+                    </el-form-item>
+                    <el-form-item label="物资图片(可选)">
+                        <el-upload
+                                :disabled="material.imageUrls.length > 0"
+                                :multiple="false"
+                                :show-file-list="false"
+                                :headers="{ Authorization: getAuthorizationHeader() }"
+                                :on-error="handleUploadError"
+                                :data="{ category }"
+                                name="image"
+                                action="/api/images"
+                                :on-progress="handleUploadInProgress"
+                                :on-success="(res) => handleUploadSuccess(res, material)"
+                        >
+                            <el-button :disabled="material.imageUrls.length > 0" type="primary">
+                                上传物资图片
+                            </el-button>
+                        </el-upload>
+                        <el-button :disabled="material.imageUrls.length === 0" type="danger"
+                                   @click="() => handleClearImage(material)">清除物资图片
+                        </el-button>
+                        <el-image v-if="material.imageUrls.length > 0" :src="material.imageUrls[0]"/>
                     </el-form-item>
                     <div type="primary" class="remove-materials" @click="handleRemoveMaterial(i)"
                          v-show="formData.materials.length > 1">
@@ -139,24 +157,6 @@
             <el-form-item label="备注">
                 <el-input v-model="formData.comment"></el-input>
             </el-form-item>
-            <!-- 图片上传 -->
-            <el-upload
-                    drag
-                    class="upload"
-                    :headers="{ Authorization: getAuthorizationHeader() }"
-                    :on-error="handleUploadError"
-                    :data="{ category }"
-                    name="image"
-                    action="/api/images"
-                    :on-progress="handleUploadInProgress"
-                    :on-success="handleUploadSuccess"
-            >
-                <i class="el-icon-upload"></i>
-                <!-- <div class="el-upload__text"><em>点击上传</em></div> -->
-                <!-- <el-button size="mini" type="primary">点击上传</el-button> -->
-                <div class="el-upload__text" v-text="labels.uploadTip"></div>
-            </el-upload>
-
             <el-button class="submit" type="primary" @click="handleSubmit"
                        v-bind:disabled="isUploading" v-bind:loading="isUploading">
                 提交
@@ -199,7 +199,8 @@
                             // 物资数量
                             quantity: '',
                             // 执行标准
-                            standard: ''
+                            standard: '',
+                            imageUrls: []
                         }
                     ],
                     // 备注
@@ -244,9 +245,9 @@
             handleUploadInProgress() {
                 this.isUploading = true
             },
-            handleUploadSuccess(res) {
+            handleUploadSuccess(res, material) {
                 const url = res.data.url
-                this.formData.imageUrls.push(url)
+                material.imageUrls.push(url)
                 this.isUploading = false
             },
             handleUploadError(err, file, fileList) {
@@ -257,6 +258,9 @@
                 })
                 this.isUploading = false
             },
+            handleClearImage(material) {
+                material.imageUrls = []
+            },
             handleSubmit() {
                 this.$emit('submit', this.formData)
             },
@@ -265,7 +269,8 @@
                     category: '',
                     name: '',
                     quantity: '',
-                    standard: ''
+                    standard: '',
+                    imageUrls: []
                 })
             },
             handleRemoveMaterial(i) {
