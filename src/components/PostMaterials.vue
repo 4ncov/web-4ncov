@@ -78,7 +78,7 @@
 <template>
     <div class="post-materials">
         <p>
-            <i class="el-icon-close" @click="hanldeGoBack"></i>
+            <i class="el-icon-close" @click="handleGoBack"></i>
         </p>
         <div class="post-materials__title">
             <h3 v-text="labels.title"></h3>
@@ -149,7 +149,26 @@
                     <el-input v-model="formData.contactorPhone"></el-input>
                 </el-form-item>
                 <el-form-item :label="labels.address">
-                    <el-input v-model="formData.address"></el-input>
+                    <el-col :span="8">
+                        <el-select v-model="formData.address.province" placeholder="省" @change="handleProvinceChange">
+                            <el-option v-for="province in location.provinces" :key="province" :label="province"
+                                       :value="province"/>
+                        </el-select>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-select v-model="formData.address.city" placeholder="市" @change="handleCityChange">
+                            <el-option v-for="city in location.cities" :key="city" :label="city" :value="city"/>
+                        </el-select>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-select v-model="formData.address.district" placeholder="区县">
+                            <el-option v-for="district in location.districts" :key="district" :label="district"
+                                       :value="district"/>
+                        </el-select>
+                    </el-col>
+                    <el-col :span="24">
+                        <el-input v-model="formData.address.streetAddress" placeholder="街道地址"/>
+                    </el-col>
                 </el-form-item>
             </div>
             <!-- 用户信息结束 -->
@@ -167,6 +186,7 @@
 
 <script>
     import MaterialCategoryService from '../services/MaterialCategory'
+    import MasterDataService from '../services/MasterData'
     import Cookie from 'js-cookie'
 
     export default {
@@ -176,9 +196,14 @@
                 type: String,
                 default: 'required'
             },
-            formData: {
+            labels: {
                 type: Object,
-                default: () => ({
+                default: () => ({})
+            }
+        },
+        data() {
+            return {
+                formData: {
                     // 发布/供货机构名称
                     organisationName: '',
                     // 联系人
@@ -186,7 +211,12 @@
                     // 联系电话
                     contactorPhone: '',
                     // 收货/发货地址
-                    address: '',
+                    address: {
+                        province: '',
+                        city: '',
+                        district: '',
+                        streetAddress: ''
+                    },
                     // 物资图片, 支持多张
                     imageUrls: [],
                     // 物资信息
@@ -205,21 +235,19 @@
                     ],
                     // 备注
                     comment: ''
-                })
-            },
-            labels: {
-                type: Object,
-                default: () => ({})
-            }
-        },
-        data() {
-            return {
+                },
                 categoryList: [],
-                isUploading: false
+                isUploading: false,
+                location: {
+                    provinces: [],
+                    cities: [],
+                    districts: []
+                }
             }
         },
         async created() {
             this.categoryList = await MaterialCategoryService.getAllCategories()
+            this.location.provinces = await MasterDataService.listProvinces()
         },
         computed: {
             // eslint-disable-next-line vue/return-in-computed-property
@@ -232,12 +260,22 @@
             }
         },
         methods: {
-            hanldeGoBack() {
+            handleGoBack() {
                 if (this.postType === 'required') {
                     this.$router.push('/required-materials-overview')
                 } else if (this.postType === 'supplied') {
                     this.$router.push('/supplied-materials-overview')
                 }
+            },
+            async handleProvinceChange() {
+                this.formData.address.city = ''
+                this.formData.address.district = ''
+                this.location.cities = await MasterDataService.listCities(this.formData.address.province)
+            },
+            async handleCityChange() {
+                this.formData.address.district = ''
+                this.location.districts = await MasterDataService.listDistricts(
+                    this.formData.address.province, this.formData.address.city)
             },
             getAuthorizationHeader() {
                 return `Bearer ${Cookie.get('token')}`
