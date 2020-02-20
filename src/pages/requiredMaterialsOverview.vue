@@ -11,7 +11,7 @@
             <MaterialList v-if="categories.length > 0" :categories="categories" :materials="materials"
                           quantityTitle="需" addressTitle="收货地址"></MaterialList>
             <el-button class="materials-loadmore" v-on:click="loadMore" v-bind:loading="loadingMore"
-                       v-bind:disabled="!hasNextPage">
+                       v-bind:disabled="!hasNextPage || loadingMore">
                 {{ hasNextPage ? '加载更多' : '没有更多' }}
             </el-button>
         </section>
@@ -43,7 +43,7 @@
                 categories: [],
                 page: 1,
                 size: 10,
-                loadingMore: false,
+                loadingMore: true,
                 hasNextPage: true,
                 selectedCategory: '',
                 isHospital: UserService.isHospital(),
@@ -56,11 +56,11 @@
             this.selectedCategory = this.categories[0].name
             const materials = await RequiredMaterialService
                 .getRequiredMaterials(this.page, this.size, this.selectedCategory)
-            if (materials.length === 0) {
-                this.hasNextPage = false
-                return
-            }
+            this.loadingMore = false
             this.materials = materials
+            if (materials.length < this.size) {
+                this.hasNextPage = false
+            }
         },
         computed: {},
         methods: {
@@ -102,34 +102,33 @@
                 ]
                 return this.option
             },
-            handleTabSwitch(tab) {
+            async handleTabSwitch(tab) {
                 this.materials = []
                 this.selectedCategory = tab.label
                 this.page = 1
-                this.loadingMore = false
+                this.loadingMore = true
                 this.hasNextPage = true
-                RequiredMaterialService.getRequiredMaterials(this.page, this.size, this.selectedCategory).then(materials => {
-                    if (materials.length === 0) {
-                        this.hasNextPage = false
-                        return
-                    }
-                    this.materials = materials
-                })
+                const materials = await RequiredMaterialService.getRequiredMaterials(
+                    this.page, this.size, this.selectedCategory)
+                this.loadingMore = false
+                this.materials = materials
+                if (materials.length < this.size) {
+                    this.hasNextPage = false
+                }
             },
-            loadMore() {
+            async loadMore() {
                 if (!this.hasNextPage) {
                     return
                 }
                 this.loadingMore = true
                 ++this.page
-                RequiredMaterialService.getRequiredMaterials(this.page, this.size, this.selectedCategory).then(materials => {
-                    this.loadingMore = false
-                    if (materials.length === 0) {
-                        this.hasNextPage = false
-                        return
-                    }
-                    this.materials = this.materials.concat(materials)
-                })
+                const materials = RequiredMaterialService.getRequiredMaterials(
+                    this.page, this.size, this.selectedCategory)
+                this.loadingMore = false
+                this.materials = this.materials.concat(materials)
+                if (materials.length < this.size) {
+                    this.hasNextPage = false
+                }
             }
         }
     }

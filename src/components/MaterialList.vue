@@ -38,7 +38,9 @@
                             {{item.material.quantity}}{{categoryNameUnitMap[item.material.category]}}
                         </strong>
                     </p>
-                    <p>{{addressTitle}}: {{item.address}}</p>
+                    <p>{{addressTitle}}: {{
+                        [item.address.province, item.address.city, item.address.district, item.address.streetAddress]
+                        .filter(addr => !!addr).join('')}}</p>
                     <p>联系人: {{item.contactorName}}</p>
                     <p>联系方式: {{item.contactorPhone}}</p>
                 </div>
