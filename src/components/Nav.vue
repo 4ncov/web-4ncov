@@ -1,17 +1,13 @@
 <template>
     <div class="box">
         <div class="banner">
-            <!-- <el-carousel height="3.5rem" trigger="click">
-        <el-carousel-item v-for="item in 4" :key="item">
-          <img src="http://resource.guofangchao.com/4ncov/u213.png" />
-        </el-carousel-item>
-      </el-carousel> -->
             <img src="http://resource.guofangchao.com/4ncov/u213.png"/>
         </div>
         <div id="navs">
             <router-link v-if="featureToggle" :to="{ path: '/real-time-data' }">实时数据</router-link>
             <router-link :to="{ path: '/required-materials-overview' }">物资寻求</router-link>
             <router-link :to="{ path: '/supplied-materials-overview' }">物资供应</router-link>
+            <router-link :to="{ path: '/me' }">我的</router-link>
         </div>
     </div>
 </template>

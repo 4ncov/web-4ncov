@@ -9,6 +9,7 @@ import contactForm from './pages/contactForm'
 import Login from './pages/login'
 import Register from './pages/register'
 import forgetPassword from './pages/forgetPassword'
+import personalView from './pages/personalView'
 import featureToggle from './utils/FeatureToggle'
 import UserService from './services/user'
 
@@ -91,10 +92,20 @@ const routes = [
         component: suppliedMaterialOverview
     },
     {
+        path: '/me',
+        name: 'me',
+        meta: {
+            title: '我的',
+            auth: true
+        },
+        component: personalView
+    },
+    {
         path: '/contact-us',
         name: 'contact-us',
         meta: {
-            title: '联系我们'
+            title: '联系我们',
+            auth: true
         },
         component: contactForm
     },
