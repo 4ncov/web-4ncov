@@ -23,11 +23,7 @@ export default {
         return Cookie.get('role')
     },
     async getMyDetail() {
-        const response = await request({
-            url: '/users/me',
-            method: 'get',
-            headers: { 'Authorization': `Bearer ${Cookie.get('token')}` }
-        })
+        const response = await request.get('/users/me')
         return response.data
     }
 }

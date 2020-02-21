@@ -11,6 +11,7 @@ import Login from './pages/login'
 import Register from './pages/register'
 import forgetPassword from './pages/forgetPassword'
 import personalView from './pages/personalView'
+import myMaterials from './pages/myMaterials'
 import featureToggle from './utils/FeatureToggle'
 import UserService from './services/user'
 
@@ -100,6 +101,18 @@ const routes = [
             auth: true
         },
         component: personalView
+    },
+    {
+        path: '/me/required-materials',
+        name: 'MyRequiredMaterials',
+        meta: { title: '我的寻求', auth: true },
+        component: myMaterials
+    },
+    {
+        path: '/me/supplied-materials',
+        name: 'MySuppliedMaterials',
+        meta: { title: '我的捐赠', auth: true },
+        component: myMaterials
     },
     {
         path: '/contact-us',

@@ -6,5 +6,9 @@ export default {
         url += !!category && `&category=${category}` || ''
         const response = await request.get(url)
         return response.data
+    },
+    async getMySuppliedMaterials(page, size) {
+        const response = await request.get(`/supplied-materials/me?page=${page}&size=${size}`)
+        return response.data
     }
 }

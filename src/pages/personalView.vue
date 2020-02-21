@@ -6,10 +6,14 @@
                 <el-button type="primary">账户信息</el-button>
             </div>
             <div v-if="role === 'HOSPITAL' || role === 'SYSADMIN'" class="me-button">
-                <el-button type="primary">我的寻求</el-button>
+                <router-link :to="{ path: '/me/required-materials' }">
+                    <el-button type="primary">我的寻求</el-button>
+                </router-link>
             </div>
             <div v-if="role === 'SUPPLIER' || role === 'SYSADMIN'" class="me-button">
-                <el-button type="primary">我的发布</el-button>
+                <router-link :to="{ path: '/me/supplied-materials' }">
+                    <el-button type="primary">我的捐赠</el-button>
+                </router-link>
             </div>
             <div class="me-button">
                 <router-link :to="{ path: '/contact-us' }">
