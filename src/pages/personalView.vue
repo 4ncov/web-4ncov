@@ -5,8 +5,11 @@
             <div class="me-button">
                 <el-button type="primary">账户信息</el-button>
             </div>
-            <div class="me-button">
-                <el-button type="primary">我发布的</el-button>
+            <div v-if="role === 'HOSPITAL' || role === 'SYSADMIN'" class="me-button">
+                <el-button type="primary">我的寻求</el-button>
+            </div>
+            <div v-if="role === 'SUPPLIER' || role === 'SYSADMIN'" class="me-button">
+                <el-button type="primary">我的发布</el-button>
             </div>
             <div class="me-button">
                 <router-link :to="{ path: '/contact-us' }">
@@ -18,12 +21,15 @@
 </template>
 <script>
     import Nav from '../components/Nav'
+    import UserService from '../services/user'
 
     export default {
         name: 'me',
         components: { Nav },
         data() {
-            return {}
+            return {
+                role: UserService.getRole()
+            }
         }
     }
 </script>

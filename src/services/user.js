@@ -19,6 +19,9 @@ export default {
     getToken() {
         return Cookie.get('token')
     },
+    getRole() {
+        return Cookie.get('role')
+    },
     async getMyDetail() {
         const response = await request({
             url: '/users/me',
