@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import { Message } from 'element-ui'
 import requiredMaterials from './pages/requiredMaterials.vue'
 import suppliedMaterials from './pages/suppliedMaterials.vue'
 import realTimeData from './pages/realTimeData'
@@ -127,6 +128,7 @@ router.beforeEach((to, from, next) => {
         if (UserService.isLogin()) {
             next()
         } else {
+            Message.warning('您还未登录，请先登录！')
             next({ path: `/login?redirectTo=${to.path}`, replace: true })
         }
     } else {
