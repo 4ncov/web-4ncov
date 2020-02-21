@@ -37,8 +37,8 @@
         },
         methods: {
             async handleSubmit() {
-                const response = await ContactMessageService.create(this.contactForm)
-                this.$message.success(response.message)
+                await ContactMessageService.create(this.contactForm)
+                this.$message.success('感谢您的反馈，我们将尽快联系您。')
             },
             handleBack() {
                 this.$router.back()
