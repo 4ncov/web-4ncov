@@ -12,6 +12,7 @@ import Register from './pages/register'
 import forgetPassword from './pages/forgetPassword'
 import personalView from './pages/personalView'
 import myMaterials from './pages/myMaterials'
+import editMaterial from './pages/editMaterial'
 import featureToggle from './utils/FeatureToggle'
 import UserService from './services/user'
 
@@ -113,6 +114,18 @@ const routes = [
         name: 'MySuppliedMaterials',
         meta: { title: '我的捐赠', auth: true },
         component: myMaterials
+    },
+    {
+        path: '/required-materials/:id',
+        name: 'EditRequiredMaterial',
+        meta: { title: '编辑寻求', auth: true },
+        component: editMaterial
+    },
+    {
+        path: '/supplied-materials/:id',
+        name: 'EditSuppliedMaterial',
+        meta: { title: '编辑供应', auth: true },
+        component: editMaterial
     },
     {
         path: '/contact-us',

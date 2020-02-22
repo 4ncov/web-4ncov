@@ -10,12 +10,17 @@
             <h3>我的{{ mode === 'MyRequiredMaterials' ? '寻求' : '供应' }}</h3>
         </div>
         <section>
-            <MaterialList v-if="categories.length > 0" :categories="categories"
+            <MaterialList v-if="categories.length > 0"
+                          :mode="mode"
+                          :isEditable="true"
+                          :categories="categories"
                           :materials="materials"
                           :quantityTitle="mode === 'MyRequiredMaterials' ? '需' : '可提供'"
-                          :addressTitle="`${mode === 'MyRequiredMaterials' ? '收货' : '供货'}地址`"/>
+                          :addressTitle="`${mode === 'MyRequiredMaterials' ? '收货' : '供货'}地址`"
+                          :handleEdit="handleEdit"/>
 
-            <el-button class="materials-loadmore" v-on:click="loadMore" v-bind:loading="pagination.loadingMore"
+            <el-button v-if="handleEdit" class="materials-loadmore" v-on:click="loadMore"
+                       v-bind:loading="pagination.loadingMore"
                        v-bind:disabled="!pagination.hasNextPage || pagination.loadingMore">
                 {{ pagination.hasNextPage ? '加载更多' : '没有更多' }}
             </el-button>
@@ -41,10 +46,15 @@
                     size: 10,
                     hasNextPage: true,
                     loadingMore: true
-                }
+                },
+                handleEdit: null
             }
         },
         async created() {
+            this.handleEdit = {
+                'MyRequiredMaterials': id => this.$router.push(`/required-materials/${id}?t=${Date.now()}`),
+                'MySuppliedMaterials': id => this.$router.push(`/supplied-materials/${id}?t=${Date.now()}`)
+            }[this.$route.name]
             await this.fetchCategories()
             await this.fetchMaterials()
         },

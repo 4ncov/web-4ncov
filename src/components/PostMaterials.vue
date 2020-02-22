@@ -131,7 +131,8 @@
                         <i class="el-icon-remove"></i>
                     </div>
                 </div>
-                <div type="primary" size="mini" class="add-materials" @click="handleAddMaterial">
+                <div v-if="isAddAllowed" type="primary" size="mini" class="add-materials"
+                     @click="handleAddMaterial">
                     <i class="el-icon-circle-plus"></i>
                 </div>
             </div>
@@ -199,6 +200,16 @@
             labels: {
                 type: Object,
                 default: () => ({})
+            },
+            materialToEdit: {
+                type: Object
+            },
+            isAddAllowed: {
+                type: Boolean,
+                default: true
+            },
+            handleGoBack: {
+                type: Function
             }
         },
         data() {
@@ -246,6 +257,9 @@
             }
         },
         async created() {
+            if (this.materialToEdit) {
+                Object.assign(this.formData, this.materialToEdit)
+            }
             this.categoryList = await MaterialCategoryService.getAllCategories()
             this.location.provinces = await MasterDataService.listProvinces()
         },
@@ -260,13 +274,6 @@
             }
         },
         methods: {
-            handleGoBack() {
-                if (this.postType === 'required') {
-                    this.$router.push('/required-materials-overview')
-                } else if (this.postType === 'supplied') {
-                    this.$router.push('/supplied-materials-overview')
-                }
-            },
             async handleProvinceChange() {
                 this.formData.address.city = ''
                 this.formData.address.district = ''

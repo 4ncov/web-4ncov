@@ -10,5 +10,9 @@ export default {
     async getMyRequiredMaterials(page, size) {
         const response = await request.get(`/required-materials/me?page=${page}&size=${size}`)
         return response.data
+    },
+    async getDetail(id) {
+        const response = await request.get(`/required-materials/${id}`)
+        return response.data
     }
 }

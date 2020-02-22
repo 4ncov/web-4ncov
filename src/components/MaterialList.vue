@@ -27,6 +27,9 @@
                         <span class="material-item__title__index">{{index + 1}}</span>
                         <p><strong>{{item.material.name}}</strong></p>
                         <p class="material-item__title_standard">执行标准: {{item.material.standard}}</p>
+                        <div v-if="isEditable">
+                            <el-button type="primary" size="mini" @click="() => handleEdit(item.id)">编辑</el-button>
+                        </div>
                     </el-col>
                 </el-row>
                 <hr class="material-item__separator"/>
@@ -68,6 +71,13 @@
             addressTitle: {
                 type: String,
                 default: () => ''
+            },
+            isEditable: {
+                type: Boolean,
+                default: () => false
+            },
+            handleEdit: {
+                type: Function
             }
         },
         data() {

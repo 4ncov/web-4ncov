@@ -7,7 +7,8 @@
 <template>
     <div class="supplied-materials">
         <img class="topImg" src="http://resource.guofangchao.com/4ncov/u213.png"/>
-        <PostMaterials :labels="labels" :postType="'supplied'" @submit="handleSubmit"></PostMaterials>
+        <PostMaterials :labels="labels" :postType="'supplied'" :handleGoBack="handleGoBack"
+                       @submit="handleSubmit"></PostMaterials>
     </div>
 </template>
 
@@ -37,6 +38,9 @@
                     this.$message({ type: 'success', message: '物资供应信息发布成功' })
                     this.$router.push({ name: 'supplied-materials-overview' })
                 })
+            },
+            handleGoBack() {
+                this.$router.push('/supplied-materials-overview')
             }
         },
         components: { PostMaterials }
