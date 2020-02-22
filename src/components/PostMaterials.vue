@@ -260,8 +260,20 @@
             if (this.materialToEdit) {
                 Object.assign(this.formData, this.materialToEdit)
             }
-            this.categoryList = await MaterialCategoryService.getAllCategories()
-            this.location.provinces = await MasterDataService.listProvinces()
+            console.log('__formdata__', this.formData)
+            const [categories, provinces, cities, districts] = await Promise.all([
+                MaterialCategoryService.getAllCategories(),
+                MasterDataService.listProvinces(),
+                this.formData.address.province
+                && MasterDataService.listCities(this.formData.address.province) || Promise.resolve([]),
+                this.formData.address.province
+                && MasterDataService.listDistricts(
+                    this.formData.address.province, this.formData.address.city) || Promise.resolve([])
+            ])
+            this.categoryList = categories
+            this.location.provinces = provinces
+            this.location.cities = cities
+            this.location.districts = districts
         },
         computed: {
             // eslint-disable-next-line vue/return-in-computed-property

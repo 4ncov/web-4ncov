@@ -58,8 +58,12 @@
                     this.material = Object.assign(this.material, { materials: [this.material.material] })
                 }
             },
-            async handleSubmit() {
-                console.log('__handleSubmit__')
+            async handleSubmit(material) {
+                this.$route.name === 'EditRequiredMaterial'
+                    ? await RequiredMaterialService.update(this.$route.params.id, material)
+                    : await SuppliedMaterialService.update(this.$route.params.id, material)
+                this.$message.success('更新成功')
+                this.$router.back()
             },
             handleGoBack() {
                 this.$router.back()

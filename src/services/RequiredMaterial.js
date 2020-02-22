@@ -14,5 +14,12 @@ export default {
     async getDetail(id) {
         const response = await request.get(`/required-materials/${id}`)
         return response.data
+    },
+    async update(id, material) {
+        await request({
+            url: `/required-materials/${id}`,
+            data: material,
+            method: 'put'
+        })
     }
 }
