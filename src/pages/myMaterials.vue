@@ -17,7 +17,8 @@
                           :materials="materials"
                           :quantityTitle="mode === 'MyRequiredMaterials' ? '需' : '可提供'"
                           :addressTitle="`${mode === 'MyRequiredMaterials' ? '收货' : '供货'}地址`"
-                          :handleEdit="handleEdit"/>
+                          :handleEdit="handleEdit"
+                          :showOrganisationButton="false"/>
 
             <el-button v-if="handleEdit" class="materials-loadmore" v-on:click="loadMore"
                        v-bind:loading="pagination.loadingMore"

@@ -34,7 +34,15 @@
                 </el-row>
                 <hr class="material-item__separator"/>
                 <div class="material-item__section">
-                    <p><strong>{{item.organisationName}}</strong></p>
+                    <p>
+                        <strong>{{item.organisationName}}</strong>
+                    </p>
+                    <p v-if="showOrganisationButton">
+                        <el-button type="primary" size="mini"
+                                   @click="() => handleViewOrganisationDetail(item)">
+                            查看详情
+                        </el-button>
+                    </p>
                     <p class="material-item__section__quantity">
                         <strong>
                             {{quantityTitle}}：
@@ -49,10 +57,27 @@
                 </div>
             </el-card>
         </div>
+        <el-dialog
+                title="机构详情"
+                :visible.sync="showOrganisationDialog"
+                width="90%"
+                class="organisation-detail__dialog"
+        >
+            <h4>机构名称</h4>
+            <p>{{ activatedOrganisationDetail.organisationName }}</p>
+            <h4>地址</h4>
+            <p>{{ activatedOrganisationDetail.formattedAddress }}</p>
+            <h4>联系人</h4>
+            <p>{{ activatedOrganisationDetail.contactorName }}</p>
+            <h4>联系电话</h4>
+            <p>{{ activatedOrganisationDetail.contactorPhone }}</p>
+        </el-dialog>
     </div>
 </template>
 
 <script>
+    import { concatAddress } from '../utils/addressUtil'
+
     export default {
         name: 'material-list',
         props: {
@@ -78,13 +103,26 @@
             },
             handleEdit: {
                 type: Function
+            },
+            showOrganisationButton: {
+                type: Boolean,
+                default: () => true
             }
         },
         data() {
             return {
                 categoryNameUnitMap: this.categories
                     .map(cat => ({ [cat.name]: cat.unit }))
-                    .reduce((current, incoming) => Object.assign(current, incoming))
+                    .reduce((current, incoming) => Object.assign(current, incoming)),
+                showOrganisationDialog: false,
+                activatedOrganisationDetail: {}
+            }
+        },
+        methods: {
+            handleViewOrganisationDetail(material) {
+                this.activatedOrganisationDetail = Object
+                    .assign({}, material, { formattedAddress: concatAddress(material.address) })
+                this.showOrganisationDialog = true
             }
         }
     }
@@ -128,6 +166,10 @@
 
     .material-item__section__quantity {
         color: #f00;
+        margin-bottom: 0.3rem;
+    }
+
+    .organisation-detail__dialog h4 {
         margin-bottom: 0.3rem;
     }
 </style>

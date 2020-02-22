@@ -260,7 +260,6 @@
             if (this.materialToEdit) {
                 Object.assign(this.formData, this.materialToEdit)
             }
-            console.log('__formdata__', this.formData)
             const [categories, provinces, cities, districts] = await Promise.all([
                 MaterialCategoryService.getAllCategories(),
                 MasterDataService.listProvinces(),
