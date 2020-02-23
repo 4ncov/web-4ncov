@@ -11,6 +11,7 @@ import Login from './pages/login'
 import Register from './pages/register'
 import forgetPassword from './pages/forgetPassword'
 import personalView from './pages/personalView'
+import myDetail from './pages/myDetail'
 import myMaterials from './pages/myMaterials'
 import editMaterial from './pages/editMaterial'
 import featureToggle from './utils/FeatureToggle'
@@ -102,6 +103,15 @@ const routes = [
             auth: true
         },
         component: personalView
+    },
+    {
+        path: '/me/detail',
+        name: 'MyDetail',
+        meta: {
+            title: '我的详情',
+            auth: true
+        },
+        component: myDetail
     },
     {
         path: '/me/required-materials',

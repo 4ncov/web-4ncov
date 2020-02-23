@@ -3,7 +3,9 @@
         <Nav/>
         <section>
             <div class="me-button">
-                <el-button type="primary">账户信息</el-button>
+                <router-link :to="{ path: '/me/detail' }">
+                    <el-button type="primary">账户信息</el-button>
+                </router-link>
             </div>
             <div v-if="role === 'HOSPITAL' || role === 'SYSADMIN'" class="me-button">
                 <router-link :to="{ path: '/me/required-materials' }">
